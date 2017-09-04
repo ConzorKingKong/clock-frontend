@@ -122,15 +122,22 @@ module.exports.addtime = function(req, res) {
 }
 
 module.exports.deletetime = function(req, res) {
+  if (!req.session.id) res.status(401).send("You are not signed in")
+  if (!req.body.id) res.status(404).send("No time ID was given")
   users.findOneAndUpdate(
-    {_id: new ObjectId(req.session.id)}, 
-    {$pull: {results: {time: {id: new ObjectId(req.body.id)}}}}, function(err, thing) {
+    {_id: new ObjectId(req.session.id)},
+    {$pull: {times: {_id: new ObjectId(req.body.id)}}}, function(err, newTimes) {
     if (err) {
       console.log(err)
       res.status(401).send("error")
     }
-    if (thing) {
-      res.status(200).send(thing)
+    if (newTimes) {
+      const {times} = newTimes.value
+      const cleanTimes = times.filter(t => {
+        return t._id.toString() !== req.body.id
+        })
+      newTimes.value.times = cleanTimes
+      res.status(200).send(newTimes)
     }
   })
 }

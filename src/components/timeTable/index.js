@@ -10,14 +10,18 @@ export default class TimeTable extends Component {
   }
 
   deleteTime (e) {
+    const {id} = e.target
     // get id and post to database
-    console.log(e.target.id)
-    axios.post("http://localhost:3000/api/deletetime", {id: e.target.id})
+    axios.post("http://localhost:3000/api/deletetime", {id})
       .then(res => {
-        console.log(res)
+        const {times} = res.data.value
+        console.log(times)
+        this.props.setAppState({
+          times
+        })
       })
       .catch( err => {
-        console.log(err)
+        console.log("err ", err)
       })
   }
 
@@ -34,15 +38,15 @@ export default class TimeTable extends Component {
     }
 
     return this.props.times.map((time, i) => {
-      const {hours, minutes, seconds, ampm, id, days} = time
+      const {hours, minutes, seconds, ampm, _id, days} = time
       return (
-        <div key={`${id}${i}`} style={{display: 'flex', flexDirection: 'row'}}>
+        <div key={_id} style={{display: 'flex', flexDirection: 'row'}}>
           <p>{hours}:</p>
           <p>{minutes}:</p>
-          <p>{seconds} </p>
-          <p>{ampm} </p>
+          <p>{seconds}</p>
+          <p>{ampm}</p>
           <p>{days.map(day => {return `${dayKey[day]} `})}</p>
-          <button id={id} onClick={this.deleteTime}>Delete</button>
+          <button id={_id} onClick={this.deleteTime}>Delete</button>
         </div>
       )
     })

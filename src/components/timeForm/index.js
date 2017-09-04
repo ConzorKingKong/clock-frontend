@@ -6,9 +6,9 @@ export default class TimeForm extends Component {
     super(props)
 
     this.state = {
-      hours: 1,
-      minutes: 0,
-      seconds: 0,
+      hours: "01",
+      minutes: "00",
+      seconds: "00",
       ampm: 'am',
       days: [],
       error: ''
@@ -21,7 +21,10 @@ export default class TimeForm extends Component {
 
   onNumberChange (e) {
     const obj = {}
-    obj[e.target.name] = parseInt(e.target.value)
+    const {name, value} = e.target
+    let newValue = value
+    if (newValue.length === 1) newValue = `0${newValue}`
+    obj[name] = newValue
     this.setState(obj)
   }
 
@@ -52,14 +55,34 @@ export default class TimeForm extends Component {
       this.setState({error: "You must select at least one day"})
       return
     }
-    axios.post("http://localhost:3000/api/addtime", {hours, minutes, seconds, ampm, days})
+    axios.post("http://localhost:3000/api/addtime", {hours: parseInt(hours), minutes: parseInt(minutes), seconds: parseInt(seconds), ampm, days})
       .then(res => {
-        console.log("time form res ", res)
         const {data} = res
         this.props.setAppState({
           times: data
         })
+        const dayButtons = [
+          this.sunday,
+          this.monday,
+          this.tuesday,
+          this.wednesday,
+          this.thursday,
+          this.friday,
+          this.saturday
+        ]
+        dayButtons.forEach(day => {
+          if (day.checked) day.checked = false
+        })
+        this.setState({
+          hours: "01",
+          minutes: "00",
+          seconds: "00",
+          ampm: 'am',
+          days: [],
+          error: ''
+        })
       })
+
       .catch(err => {
         console.log("time form err ", err)
       })
@@ -77,9 +100,9 @@ export default class TimeForm extends Component {
             <h5>Seconds</h5>
           </div>
           <div>
-            <input type="number" name="hours" min="1" max="12" onChange={this.onNumberChange} value={hours} />
-            <input type="number" name="minutes" min="0" max="59" onChange={this.onNumberChange} value={minutes} />
-            <input type="number" name="seconds" min="0" max="59" onChange={this.onNumberChange} value={seconds} />
+            <input type="number" name="hours" min="01" max="12" onChange={this.onNumberChange} value={hours} />
+            <input type="number" name="minutes" min="00" max="59" onChange={this.onNumberChange} value={minutes} />
+            <input type="number" name="seconds" min="00" max="59" onChange={this.onNumberChange} value={seconds} />
           </div>
         </div>
         <select name="ampm" value={ampm} onChange={this.onSelectChange} >
@@ -88,31 +111,31 @@ export default class TimeForm extends Component {
         </select>
         <fieldset>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="sunday" value="0" />
+            <input ref={d => {this.sunday = d}} onChange={this.onCheckChange} type="checkbox" name="sunday" value="0" />
             <label>Sunday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="monday" value="1" />
+            <input ref={d => {this.monday = d}} onChange={this.onCheckChange} type="checkbox" name="monday" value="1" />
             <label>Monday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="tuesday" value="2" />
+            <input ref={d => {this.tuesday = d}} onChange={this.onCheckChange} type="checkbox" name="tuesday" value="2" />
             <label>Tuesday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="wednesday" value="3" />
+            <input ref={d => {this.wednesday = d}} onChange={this.onCheckChange} type="checkbox" name="wednesday" value="3" />
             <label>Wednesday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="thursday" value="4" />
+            <input ref={d => {this.thursday = d}} onChange={this.onCheckChange} type="checkbox" name="thursday" value="4" />
             <label>Thursday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="friday" value="5" />
+            <input ref={d => {this.friday = d}} onChange={this.onCheckChange} type="checkbox" name="friday" value="5" />
             <label>Friday</label>
           </div>
           <div>
-            <input onChange={this.onCheckChange} type="checkbox" name="saturday" value="6" />
+            <input ref={d => {this.saturday = d}} onChange={this.onCheckChange} type="checkbox" name="saturday" value="6" />
             <label>Saturday</label>
           </div>
         </fieldset>

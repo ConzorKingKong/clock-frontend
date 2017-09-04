@@ -15,7 +15,7 @@ export default class Clock extends Component {
   render () {
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <TimeTable times={this.props.times} />
+        <TimeTable setAppState={this.props.setAppState} times={this.props.times} />
         <TimeForm setAppState={this.props.setAppState} />
       </div>
     )
