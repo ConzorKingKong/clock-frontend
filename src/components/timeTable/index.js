@@ -14,36 +14,7 @@ export default class TimeTable extends Component {
     // get id and post to database
     axios.post("http://localhost:3000/api/deletetime", {id})
       .then(res => {
-        let {times} = res.data.value
-        times.forEach(time => {
-          const {minutes, seconds, ampm} = time
-          let {hours} = time
-          time.milliseconds = []
-          if (ampm === "pm" && hours !== 12) hours = hours + 12
-          if (ampm === "am" && hours === 12) hours = 0
-          time.days.forEach(day => {
-            const now = new Date()
-            if (now.getDay() < day) {
-              const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-              const daysOut = Math.abs(day - now.getDay())
-              const alarmTime = baseTime.getTime() + (86400000 * daysOut)
-              time.milliseconds.push(alarmTime)
-            } else if (now.getDay() > day) {
-              const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-              const daysOut = 7 - (now.getDay() - day)
-              const alarmTime = baseTime.getTime() + (86400000 * daysOut)
-              time.milliseconds.push(alarmTime)
-            } else if (now.getDay() === day) {
-              let baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-              if (new Date().getTime() > baseTime.getTime()) {
-                baseTime = baseTime.getTime() + 604800000
-                time.milliseconds.push(baseTime)
-              } else {
-                time.milliseconds.push(baseTime.getTime())
-              }
-            }
-          })
-        })
+        const {times} = res.data.value
         this.props.setAppState({
           times
         })

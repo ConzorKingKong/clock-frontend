@@ -23,37 +23,7 @@ export default class App extends Component {
   componentWillMount () {
     axios.get('http://localhost:3000/api/loginstatus')
     .then(res => {
-      const {loggedIn} = res.data
-      let {times} = res.data
-      times.forEach(time => {
-        const {minutes, seconds, ampm} = time
-        let {hours} = time
-        time.milliseconds = []
-        if (ampm === "pm" && hours !== 12) hours = hours + 12
-        if (ampm === "am" && hours === 12) hours = 0
-        time.days.forEach(day => {
-          const now = new Date()
-          if (now.getDay() < day) {
-            const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-            const daysOut = Math.abs(day - now.getDay())
-            const alarmTime = baseTime.getTime() + (86400000 * daysOut)
-            time.milliseconds.push(alarmTime)
-          } else if (now.getDay() > day) {
-            const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-            const daysOut = 7 - (now.getDay() - day)
-            const alarmTime = baseTime.getTime() + (86400000 * daysOut)
-            time.milliseconds.push(alarmTime)
-          } else if (now.getDay() === day) {
-            let baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
-            if (new Date().getTime() > baseTime.getTime()) {
-              baseTime = baseTime.getTime() + 604800000
-              time.milliseconds.push(baseTime)
-            } else {
-              time.milliseconds.push(baseTime.getTime())
-            }
-          }
-        })
-      })
+      const {loggedIn, times} = res.data
       this.setState({
         times,
         loggedIn
@@ -75,20 +45,16 @@ export default class App extends Component {
       return
     }
     times.forEach((time, timeIndex) => {
-      // fix adding 12 hours for pm if hours === 12
-      time.milliseconds.forEach((milli, milliIndex) => {
-        if (new Date().getTime() >= milli) {
-          console.log("ALARM!!!")
-          const newMillies = [].concat(time.milliseconds)
-          newMillies[milliIndex] = newMillies[milliIndex] + 604800000
-          const newTimes = [...times]
-          console.log("new times ", newTimes)
-          newTimes[timeIndex].milliseconds = newMillies
-          console.log("new times after edits ", newTimes)
-          this.setState({
-            times: newTimes
-          })
-        }
+      const {minutes, seconds, days, ampm} = time
+      let {hours} = time
+      if (ampm === "pm" && hours !== 12) hours = hours + 12
+      if (ampm === "am" && hours === 12) hours = 0
+      if (hours !== new Date().getHours()) return
+      if (minutes !== new Date().getMinutes()) return
+      if (seconds !== new Date().getSeconds()) return
+      days.forEach(day => {
+        if (day !== new Date().getDay()) return
+        console.log("ALARM HAPPENED ", day, ' ', time)
       })
     })
     window.requestAnimationFrame(this.timeLoop)
@@ -106,6 +72,3 @@ export default class App extends Component {
     )
   }
 }
-
-// 86400000 milliseconds in 24 hours
-// 604800000 milliseconds in a week
