@@ -25,10 +25,40 @@ export default class Login extends Component {
     const {email, password} = this.state
     axios.post("http://localhost:3000/api/signin", {email, password})
       .then(res => {
-        const {data} = res
+        const {loggedIn} = res.data
+        let {times} = res.data
+        times.forEach(time => {
+          const {minutes, seconds, ampm} = time
+          let {hours} = time
+          time.milliseconds = []
+          if (ampm === "pm" && hours !== 12) hours = hours + 12
+          if (ampm === "am" && hours === 12) hours = 0
+          time.days.forEach(day => {
+            const now = new Date()
+            if (now.getDay() < day) {
+              const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
+              const daysOut = Math.abs(day - now.getDay())
+              const alarmTime = baseTime.getTime() + (86400000 * daysOut)
+              time.milliseconds.push(alarmTime)
+            } else if (now.getDay() > day) {
+              const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
+              const daysOut = 7 - (now.getDay() - day)
+              const alarmTime = baseTime.getTime() + (86400000 * daysOut)
+              time.milliseconds.push(alarmTime)
+            } else if (now.getDay() === day) {
+              let baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds)
+              if (new Date().getTime() > baseTime.getTime()) {
+                baseTime = baseTime.getTime() + 604800000
+                time.milliseconds.push(baseTime)
+              } else {
+                time.milliseconds.push(baseTime.getTime())
+              }
+            }
+          })
+        })
         this.props.setAppState({
-          loggedIn: data.loggedIn,
-          times: data.times
+          loggedIn,
+          times
         })
         this.setState({email: '', password: '', error: ''})
       })
