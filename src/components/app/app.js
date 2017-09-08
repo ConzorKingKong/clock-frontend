@@ -16,8 +16,29 @@ export default class App extends Component {
       times: []
     }
 
+    const dayKey = {
+      0: "sunday",
+      1: "monday",
+      2: "tuesday",
+      3: "wednesday",
+      4: "thursday",
+      5: "friday",
+      6: "saturday"
+    }
+
+    this.worker = new Worker('loop.js')
+    this.worker.onmessage = (e) => {
+      if (e.data === null) {
+        this.worker.postMessage(this.state.times)
+      } else {
+        console.log("alert ", e)
+        const {day, hours, minutes, seconds, ampm} = e.data
+        alert(`Alarm for ${dayKey[day]} at ${hours}:${minutes}:${seconds} ${ampm} happened!`)
+        this.worker.postMessage(this.state.times)        
+      }
+    }
+
     this.setAppState = this.setAppState.bind(this)
-    this.timeLoop = this.timeLoop.bind(this)
   }
 
   componentWillMount () {
@@ -38,35 +59,13 @@ export default class App extends Component {
     this.setState(e)
   }
 
-  timeLoop () {
-    const {times} = this.state
-    if (times.length === 0) {
-      window.requestAnimationFrame(this.timeLoop)
-      return
-    }
-    times.forEach((time, timeIndex) => {
-      const {minutes, seconds, days, ampm} = time
-      let {hours} = time
-      if (ampm === "pm" && hours !== 12) hours = hours + 12
-      if (ampm === "am" && hours === 12) hours = 0
-      if (hours !== new Date().getHours()) return
-      if (minutes !== new Date().getMinutes()) return
-      if (seconds !== new Date().getSeconds()) return
-      days.forEach(day => {
-        if (day !== new Date().getDay()) return
-        console.log("ALARM HAPPENED ", day, ' ', time)
-      })
-    })
-    window.requestAnimationFrame(this.timeLoop)
-  }
-
   render () {
-    window.requestAnimationFrame(this.timeLoop)
+    const {worker} = this
     const {loggedIn, times} = this.state
+    if (loggedIn) worker.postMessage(times)
     return (
       <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
         {!loggedIn && <div><Login setAppState={this.setAppState}/> <Register setAppState={this.setAppState} /></div> }
-        <Logout setAppState={this.setAppState} />
         {loggedIn && <div><Logout setAppState={this.setAppState} /><Clock times={times} setAppState={this.setAppState} /></div> }
       </div>
     )

@@ -55,7 +55,7 @@ export default class TimeForm extends Component {
       this.setState({error: "You must select at least one day"})
       return
     }
-    axios.post("http://localhost:3000/api/addtime", {hours: parseInt(hours), minutes: parseInt(minutes), seconds: parseInt(seconds), ampm, days})
+    axios.post("http://localhost:3000/api/addtime", {hours, minutes, seconds, ampm, days})
       .then(res => {
         let {data} = res
         this.props.setAppState({
