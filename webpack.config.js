@@ -26,6 +26,10 @@ module.exports = {
     {
       test: /\.(png|jpg)$/,
       loader: 'url-loader?limit=8192'
+    },
+    {
+      test: /\.mp3$/,
+      loader: 'file-loader'
     }]
   },
   resolve: {

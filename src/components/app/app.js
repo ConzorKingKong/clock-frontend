@@ -4,6 +4,8 @@ import Register from '../register'
 import Logout from '../logout'
 import Clock from '../clock'
 import axios from 'axios'
+import gong from '../../assets/gong.mp3'
+import loop from '!!file-loader!../../assets/loop.js'
 
 import './app.styl'
 
@@ -13,7 +15,8 @@ export default class App extends Component {
 
     this.state = {
       loggedIn: false,
-      times: []
+      times: [],
+      alarm: false
     }
 
     const dayKey = {
@@ -27,18 +30,23 @@ export default class App extends Component {
     }
 
     // TODO handle if else no worker
-    this.worker = new Worker('loop.js')
+    // TODO find how multiple workers spawn(?)
+    this.worker = new Worker(loop)
     this.worker.onmessage = (e) => {
       if (e.data === null) {
         this.worker.postMessage(this.state.times)
       } else {
-        const {day, hours, minutes, seconds, ampm} = e.data
-        const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} went off`})
-        alert(`Alarm for ${dayKey[day]} at ${hours}:${minutes}:${seconds} ${ampm} happened!`)
-        this.worker.postMessage(this.state.times)        
+        const {hours, minutes, seconds, ampm} = e.data.time
+        const {day} = e.data
+        const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`})
+        this.worker.postMessage(this.state.times)
+        this.setState({
+          alarm: true
+        })
       }
     }
 
+    this.onButtonClick = this.onButtonClick.bind(this)
     this.setAppState = this.setAppState.bind(this)
   }
 
@@ -60,16 +68,22 @@ export default class App extends Component {
     this.setState(e)
   }
 
+  onButtonClick (e) {
+    e.preventDefault()
+    this.setState({alarm: false})
+  }
+
   render () {
     const {worker} = this
-    const {loggedIn, times} = this.state
+    const {loggedIn, times, alarm} = this.state
     // TODO if else to handle notification. if permission
     if (loggedIn) Notification.requestPermission()
     if (loggedIn) worker.postMessage(times)
     return (
       <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
-        {!loggedIn && <div><Login setAppState={this.setAppState}/> <Register setAppState={this.setAppState} /></div> }
-        {loggedIn && <div><Logout setAppState={this.setAppState} /><Clock times={times} setAppState={this.setAppState} /></div> }
+        { !loggedIn && <div><Login setAppState={this.setAppState}/> <Register setAppState={this.setAppState} /></div> }
+        { loggedIn && <div><Logout setAppState={this.setAppState} /><Clock times={times} setAppState={this.setAppState} /></div> }
+        { alarm && <div><audio src={gong} autoPlay loop/> <button onClick={this.onButtonClick}>■</button></div> }
       </div>
     )
   }
