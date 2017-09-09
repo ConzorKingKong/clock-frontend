@@ -26,13 +26,14 @@ export default class App extends Component {
       6: "saturday"
     }
 
+    // TODO handle if else no worker
     this.worker = new Worker('loop.js')
     this.worker.onmessage = (e) => {
       if (e.data === null) {
         this.worker.postMessage(this.state.times)
       } else {
-        console.log("alert ", e)
         const {day, hours, minutes, seconds, ampm} = e.data
+        const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} went off`})
         alert(`Alarm for ${dayKey[day]} at ${hours}:${minutes}:${seconds} ${ampm} happened!`)
         this.worker.postMessage(this.state.times)        
       }
@@ -62,6 +63,8 @@ export default class App extends Component {
   render () {
     const {worker} = this
     const {loggedIn, times} = this.state
+    // TODO if else to handle notification. if permission
+    if (loggedIn) Notification.requestPermission()
     if (loggedIn) worker.postMessage(times)
     return (
       <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
