@@ -11,7 +11,6 @@ export default class Logout extends Component {
   onButtonClick () {
     axios.post("http://localhost:3000/api/signout")
       .then(res => {
-        console.log("logout res "), (res)
         this.props.setAppState({loggedIn: false, times: []})
       })
   }

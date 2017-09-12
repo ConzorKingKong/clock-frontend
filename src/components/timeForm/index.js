@@ -20,7 +20,6 @@ export default class TimeForm extends Component {
     }
     axios.post("http://localhost:3000/api/addtime", {_id, hours, minutes, seconds, ampm, days})
       .then(res => {
-        console.log("RES")
         let {data} = res
         this.props.setAppState({
           times: data
@@ -56,7 +55,6 @@ export default class TimeForm extends Component {
 
   render () {
     const {hours, minutes, seconds, ampm, days, error} = this.props
-    console.log(days)
     return (
       <form onSubmit={this.onFormSubmit}>
         <p>{error}</p>
