@@ -36,7 +36,7 @@ export default class TimeTable extends Component {
     }
 
     return this.props.times.map((time, i) => {
-      const {hours, minutes, seconds, ampm, _id, days} = time
+      const {_id, hours, minutes, seconds, ampm, days} = time
       return (
         <div key={_id} style={{display: 'flex', flexDirection: 'row'}}>
           <p>{hours}:</p>
@@ -45,6 +45,7 @@ export default class TimeTable extends Component {
           <p>{ampm}</p>
           <p>{days.map(day => {return `${dayKey[day]} `})}</p>
           <button id={_id} onClick={this.deleteTime}>Delete</button>
+          <button id={_id} data-_id={_id} data-hours={hours} data-minutes={minutes} data-seconds={seconds} data-ampm={ampm} data-days={days} onClick={this.props.editTime}>Edit</button>
         </div>
       )
     })
@@ -58,6 +59,3 @@ export default class TimeTable extends Component {
     )
   }
 }
-
-// 86400000 milliseconds in 24 hours
-// 604800000 milliseconds in a week

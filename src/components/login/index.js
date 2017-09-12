@@ -8,15 +8,32 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      errorEmail: ''
     }
     this.onInputChange = this.onInputChange.bind(this)
+    this.onInputBlur = this.onInputBlur.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
   onInputChange (e) {
+    const {name, value} = e.target
     const obj = {}
-    obj[e.target.name] = e.target.value
+    obj[name] = value
+    this.setState(obj)
+  }
+
+  onInputBlur (e) {
+    const {name, value} = e.target
+    function capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    const emailRegex = /\S+@\S+\.\S+/
+    const obj = {}
+    obj[`error${capitalize(name)}`] = ''    
+    if (name === 'email') {
+      if (!emailRegex.test(value) && value !== '') obj[`error${capitalize(name)}`] = 'Email is not valid'
+    }
     this.setState(obj)
   }
 
@@ -33,28 +50,34 @@ export default class Login extends Component {
         this.setState({email: '', password: '', error: ''})
       })
       .catch(err => {
-        console.log("login err ", err)
         const {data} = err.response
         this.props.setAppState({loggedIn: data.loggedIn})
-        this.setState({email: '', password: '', error: data.error})
+        this.setState({
+          email: '',
+          password: '',
+          error: data.error
+        })
       })
   }
 
   render () {
+    const {email, password, error, errorEmail} = this.state
     return (
     <form onSubmit={this.onFormSubmit}>
-      <p>{this.state.error}</p>
+      <p>{error}</p>
+      <p>{errorEmail}</p>
       <h3>Login</h3>
       <input
         onChange={this.onInputChange}
-        value={this.state.email}
+        onBlur = {this.onInputBlur}
+        value={email}
         type="text"
         placeholder="Email"
         name="email" />
 
       <input
         onChange={this.onInputChange}
-        value={this.state.password}
+        value={password}
         type="password"
         placeholder="Password"
         name="password" />

@@ -12,24 +12,7 @@ mongo.connect('mongodb://127.0.0.1/clock', function(err, conn) {
   users = conn.collection('users')
 })
 
-function cleanUser (user) {
-  var cleanUser = {}
-  var keys = Object.keys(user)
-  if (user.hasOwnProperty('value')) {
-    keys = Object.keys(user.value)
-  }
-  for (var i = 0; i < keys.length; i++) {
-    if (keys[i] !== "password" && user.hasOwnProperty('value')) {
-      cleanUser[keys[i]] = user.value[keys[i]]
-    } else if (keys[i] !== 'password') {
-      cleanUser[keys[i]] = user[keys[i]]
-    }
-  }
-  return cleanUser
-}
-
 module.exports.signup = function(req, res) {
-
   users.findOne({email: req.body.email}, function(err, user) {
     if (user !== null) {
       res.status(401).send({error: 'User already exists!', loggedIn: false})
@@ -52,7 +35,6 @@ module.exports.signup = function(req, res) {
             res.status(401).send({error: 'error', loggedIn: false})
           } else {
             req.session.id = user.ops[0]._id
-            // dont send back user info
             res.status(200).send({times: user.ops[0].times, loggedIn: true})
           }
         })
@@ -101,24 +83,59 @@ module.exports.addtime = function(req, res) {
     res.send({error: 'You must be logged in', loggedIn: false})
     return
   }
-  // first try to find if same time exists with different days. then run this code if not true
   var newTime = req.body
-  newTime._id = new ObjectId()
-  users.findOneAndUpdate({_id: new ObjectId(req.session.id)}, {$addToSet: {times: newTime} }, function(err, user) {
-    if (err) {
-      console.log(err)
-      res.status(401).send('error')
-    } else {
-      users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
-        if (err) {
-          console.log(err)
-          res.status(401).send('error')
-        } else {
-          res.status(200).send(user.times)
+  if (newTime._id !== '') {
+    newTime._id = new ObjectId(newTime._id)
+    users.findOneAndUpdate({_id: new ObjectId(req.session.id), "times._id": new ObjectId(newTime._id)}, {$set: {"times.$": newTime}}, function(err, answer) {
+      if (err) {
+        console.log(err)
+        res.status(401).send('error')
+      } else {
+        users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
+          if (err) {
+            console.log(err)
+            res.status(401).send('error')
+          } else {
+            res.status(200).send(user.times)
+          }
+        })
+      }
+    })
+  } else {
+    newTime._id = new ObjectId()
+    var cont = true
+    users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
+      if (err) {
+        console.log(err)
+        res.status(401).send('error')
+      } else {
+        user.times.forEach(function(time) {
+          if (time.hours === newTime.hours && time.minutes === newTime.minutes && time.seconds === newTime.seconds && time.ampm === newTime.ampm) {
+            cont = false
+            res.status(400).send('Time already exists')
+            return
+          }
+        })
+        if (cont) {
+          users.findOneAndUpdate({_id: new ObjectId(req.session.id)}, {$addToSet: {times: newTime} }, function(err, user) {
+            if (err) {
+              console.log(err)
+              res.status(401).send('error')
+            } else {
+              users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
+                if (err) {
+                  console.log(err)
+                  res.status(401).send('error')
+                } else {
+                  res.status(200).send(user.times)
+                }
+              })
+            }
+          })
         }
-      })
-    }
-  })
+      }
+    })
+  }
 }
 
 module.exports.deletetime = function(req, res) {
