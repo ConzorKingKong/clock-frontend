@@ -3,6 +3,8 @@ import axios from 'axios'
 import TimeTable from '../timeTable'
 import TimeForm from '../timeForm'
 
+import './clock.css'
+
 export default class Clock extends Component {
   constructor (props) {
     super(props)
@@ -72,22 +74,40 @@ export default class Clock extends Component {
 
   render () {
     const {_id, hours, minutes, seconds, ampm, days} = this.state
+    const {loggedIn} = this.props
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <TimeTable setAppState={this.props.setAppState} times={this.props.times} editTime={this.editTime} />
-        <TimeForm
-          setAppState={this.props.setAppState}
-          setClockState={this.setClockState}
-          onCheckChange={this.onCheckChange}
-          onSelectChange={this.onSelectChange}
-          onNumberChange={this.onNumberChange}
-          _id={_id}
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          ampm={ampm}
-          days={days}
-        />
+        <div className="outer-clock" style={{display: 'flex', justifyContent: 'center'}}>
+          <article className="clock">
+            <div className="hours-container">
+              <div className="hours"></div>
+            </div>
+            <div className="minutes-container">
+              <div className="minutes"></div>
+            </div>
+            <div className="seconds-container">
+              <div className="seconds"></div>
+            </div>
+          </article>
+        </div>
+        { loggedIn && <TimeTable
+                        setAppState={this.props.setAppState}
+                        times={this.props.times}
+                        editTime={this.editTime}
+                        /> }
+        { loggedIn && <TimeForm
+                        setAppState={this.props.setAppState}
+                        setClockState={this.setClockState}
+                        onCheckChange={this.onCheckChange}
+                        onSelectChange={this.onSelectChange}
+                        onNumberChange={this.onNumberChange}
+                        _id={_id}
+                        hours={hours}
+                        minutes={minutes}
+                        seconds={seconds}
+                        ampm={ampm}
+                        days={days}
+                      /> }
       </div>
     )
   }

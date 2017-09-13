@@ -4,7 +4,6 @@ import axios from 'axios'
 export default class Register extends Component {
   constructor (props) {
     super(props)
-    // on input password dnot atch
     
     this.state = {
       email: '',
@@ -19,7 +18,23 @@ export default class Register extends Component {
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onInputBlur = this.onInputBlur.bind(this)
+    this.eventListener = this.eventListener.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
+  }
+
+  componentWillMount () {
+    document.body.addEventListener("click", this.eventListener)
+  }
+
+  componentWillUnmount () {
+    document.body.removeEventListener("click", this.eventListener)
+    this.props.setRegisterState()
+  }
+
+  eventListener (e) {
+    if (!this.registerForm.contains(e.target)) {
+      this.props.setRegisterState()
+    }
   }
 
   onInputChange (e) {
@@ -96,7 +111,7 @@ export default class Register extends Component {
   render () {
     const {email, username, password, verifyPassword} = this.state
     return (
-    <form onSubmit={this.onFormSubmit} >
+    <form ref={(r) => {this.registerForm = r}}onSubmit={this.onFormSubmit} >
       <p>{this.state.error}</p>
       <p>{this.state.errorEmail}</p>
       <p>{this.state.errorUsername}</p>

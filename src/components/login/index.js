@@ -13,7 +13,23 @@ export default class Login extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onInputBlur = this.onInputBlur.bind(this)
+    this.eventListener = this.eventListener.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
+  }
+
+  componentWillMount () {
+    document.body.addEventListener("click", this.eventListener)
+  }
+
+  componentWillUnmount () {
+    document.body.removeEventListener("click", this.eventListener)
+    this.props.setLoginState()
+  }
+
+  eventListener (e) {
+    if (!this.loginForm.contains(e.target)) {
+      this.props.setLoginState()
+    }
   }
 
   onInputChange (e) {
@@ -63,7 +79,7 @@ export default class Login extends Component {
   render () {
     const {email, password, error, errorEmail} = this.state
     return (
-    <form onSubmit={this.onFormSubmit}>
+    <form ref={(r) => {this.loginForm = r}} onSubmit={this.onFormSubmit}>
       <p>{error}</p>
       <p>{errorEmail}</p>
       <h3>Login</h3>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Titlebar from '../titlebar'
 import Login from '../login'
 import Register from '../register'
 import Logout from '../logout'
@@ -81,8 +82,8 @@ export default class App extends Component {
     if (loggedIn) worker.postMessage(times)
     return (
       <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
-        { !loggedIn && <div><Login setAppState={this.setAppState}/> <Register setAppState={this.setAppState} /></div> }
-        { loggedIn && <div><Logout setAppState={this.setAppState} /><Clock times={times} setAppState={this.setAppState} /></div> }
+        <Titlebar setAppState={this.setAppState} loggedIn={loggedIn}/>
+        <Clock times={times} setAppState={this.setAppState} loggedIn={loggedIn}/>
         { alarm && <div><audio src={gong} autoPlay loop/> <button onClick={this.onButtonClick}>■</button></div> }
       </div>
     )

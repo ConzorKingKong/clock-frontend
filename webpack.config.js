@@ -14,7 +14,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.styl$/,
+      test: /\.(css|styl)$/,
       exclude: /node_modules/,
       loader: 'style-loader!css-loader!stylus-loader'
     },
@@ -24,7 +24,7 @@ module.exports = {
       loader: 'babel-loader'
     },
     {
-      test: /\.(png|jpg)$/,
+      test: /\.(png|jpg|svg)$/,
       loader: 'url-loader?limit=8192'
     },
     {
