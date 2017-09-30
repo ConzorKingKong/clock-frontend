@@ -74,21 +74,13 @@ export default class Clock extends Component {
 
   render () {
     const {_id, hours, minutes, seconds, ampm, days} = this.state
-    const {loggedIn} = this.props
+    const {loggedIn, date} = this.props
+    const daysKey = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div className="outer-clock" style={{display: 'flex', justifyContent: 'center'}}>
-          <article className="clock">
-            <div className="hours-container">
-              <div className="hours"></div>
-            </div>
-            <div className="minutes-container">
-              <div className="minutes"></div>
-            </div>
-            <div className="seconds-container">
-              <div className="seconds"></div>
-            </div>
-          </article>
+        <div>
+          <p>{daysKey[date.getDay()]} {date.getMonth() + 1} {date.getDate()} {date.getYear()}</p>
+          <p>{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</p>
         </div>
         { loggedIn && <TimeTable
                         setAppState={this.props.setAppState}

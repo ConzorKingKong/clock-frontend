@@ -17,6 +17,7 @@ export default class App extends Component {
     this.state = {
       loggedIn: false,
       times: [],
+      date: new Date(),
       alarm: false
     }
 
@@ -29,26 +30,14 @@ export default class App extends Component {
       5: "friday",
       6: "saturday"
     }
-
-    // TODO handle if else no worker
-    // TODO find how multiple workers spawn(?)
-    this.worker = new Worker(loop)
-    this.worker.onmessage = (e) => {
-      if (e.data === null) {
-        this.worker.postMessage(this.state.times)
-      } else {
-        const {hours, minutes, seconds, ampm} = e.data.time
-        const {day} = e.data
-        const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`})
-        this.worker.postMessage(this.state.times)
-        this.setState({
-          alarm: true
-        })
-      }
-    }
-
+    
     this.onButtonClick = this.onButtonClick.bind(this)
     this.setAppState = this.setAppState.bind(this)
+    
+    // TODO handle if else no worker
+    // TODO find how multiple workers spawn(?)
+    
+    
   }
 
   componentWillMount () {
@@ -63,6 +52,31 @@ export default class App extends Component {
     .catch(err => {
       console.log("app error ", err)
     })
+    
+    this.worker = new Worker(loop)
+    this.worker.onmessage = (e) => {
+      this.setState({date: e.data.date})
+      if (Object.keys(e.data).length === 1) {
+        setTimeout(() => {this.worker.postMessage(this.state.times)}, 250)
+        // this.worker.postMessage(this.state.times)
+      } else {
+        console.log(e.data)
+        const {hours, minutes, seconds, ampm} = e.data.time
+        const {day} = e.data
+        const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`})
+        setTimeout(() => {this.worker.postMessage(this.state.times)}, 1000)
+        this.setState({
+          alarm: true
+        })
+      }
+    }
+    
+    this.worker.postMessage(this.state.times)
+    
+  }
+  
+  componentWillUnmount () {
+    this.worker.terminate()
   }
 
   setAppState (e) {
@@ -75,15 +89,18 @@ export default class App extends Component {
   }
 
   render () {
-    const {worker} = this
-    const {loggedIn, times, alarm} = this.state
+    const {loggedIn, times, date, alarm} = this.state
     // TODO if else to handle notification. if permission
     if (loggedIn) Notification.requestPermission()
-    if (loggedIn) worker.postMessage(times)
     return (
       <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
         <Titlebar setAppState={this.setAppState} loggedIn={loggedIn}/>
-        <Clock times={times} setAppState={this.setAppState} loggedIn={loggedIn}/>
+        <Clock
+          times={times}
+          date={date}
+          setAppState={this.setAppState}
+          loggedIn={loggedIn}
+        />
         { alarm && <div><audio src={gong} autoPlay loop/> <button onClick={this.onButtonClick}>■</button></div> }
       </div>
     )

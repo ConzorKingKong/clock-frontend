@@ -1,13 +1,13 @@
 var mongo = require('mongodb').MongoClient
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcryptjs')
 var salt = 10
 var ObjectId = require('mongodb').ObjectId
 var users = ''
 
 mongo.connect('mongodb://127.0.0.1/clock', function(err, conn) {
-  if (err)  { 
+  if (err)  {
     console.log(err)
-    return 
+    return
   }
   users = conn.collection('users')
 })
@@ -38,7 +38,7 @@ module.exports.signup = function(req, res) {
             res.status(200).send({times: user.ops[0].times, loggedIn: true})
           }
         })
-      })  
+      })
     }
   })
 }

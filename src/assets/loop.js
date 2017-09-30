@@ -1,7 +1,7 @@
 onmessage = function(e) {
   const times = e.data
   if (times.length === 0) {
-    // window.requestAnimationFrame(this.timeLoop)
+    self.postMessage({date: new Date()})
     return
   }
   times.forEach((time, timeIndex) => {
@@ -12,23 +12,23 @@ onmessage = function(e) {
     if (ampm === "pm" && hoursParsed !== 12) hoursParsed = hoursParsed + 12
     if (ampm === "am" && hoursParsed === 12) hoursParsed = 0
     if (hoursParsed !== new Date().getHours()) {
-      setTimeout(postMessage, 500, null)
+      postMessage({date: new Date()})
       return
     }
     if (minutesParsed !== new Date().getMinutes()) {
-      setTimeout(postMessage, 500, null)      
+      postMessage({date: new Date()})
       return
     }
     if (secondsParsed !== new Date().getSeconds()) {
-      setTimeout(postMessage, 500, null)      
+      postMessage({date: new Date()})
       return
     }
     days.forEach(day => {
       if (day !== new Date().getDay()) {
-        setTimeout(postMessage, 500, null)        
+        postMessage({date: new Date()})
         return
       }
-      setTimeout(postMessage, 500, {time, day})
+      postMessage({time, day, date: new Date()})
     })
   })
 }
