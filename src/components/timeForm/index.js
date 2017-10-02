@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import './index.styl'
 
 export default class TimeForm extends Component {
   constructor (props) {
@@ -8,6 +9,7 @@ export default class TimeForm extends Component {
     this.state = {
       error: ''
     }
+
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
@@ -69,12 +71,12 @@ export default class TimeForm extends Component {
             <input type="number" name="hours" min="01" max="12" onChange={this.props.onNumberChange} value={hours} />
             <input type="number" name="minutes" min="00" max="59" onChange={this.props.onNumberChange} value={minutes} />
             <input type="number" name="seconds" min="00" max="59" onChange={this.props.onNumberChange} value={seconds} />
+            <select name="ampm" value={ampm} onChange={this.props.onSelectChange} >
+              <option value="am">AM</option>
+              <option value="pm">PM</option>
+            </select>
           </div>
         </div>
-        <select name="ampm" value={ampm} onChange={this.props.onSelectChange} >
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
-        </select>
         <fieldset>
           <div>
             <input ref={d => {this.sunday = d}} onChange={this.props.onCheckChange} type="checkbox" name="sunday" value="0" checked={days.includes(0) && true}/>

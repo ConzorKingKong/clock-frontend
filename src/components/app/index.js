@@ -8,7 +8,7 @@ import axios from 'axios'
 import gong from '../../assets/gong.mp3'
 import loop from '!!file-loader!../../assets/loop.js'
 
-import './app.styl'
+import './index.styl'
 
 export default class App extends Component {
   constructor (props) {
@@ -58,7 +58,6 @@ export default class App extends Component {
       this.setState({date: e.data.date})
       if (Object.keys(e.data).length === 1) {
         setTimeout(() => {this.worker.postMessage(this.state.times)}, 250)
-        // this.worker.postMessage(this.state.times)
       } else {
         console.log(e.data)
         const {hours, minutes, seconds, ampm} = e.data.time
@@ -93,7 +92,7 @@ export default class App extends Component {
     // TODO if else to handle notification. if permission
     if (loggedIn) Notification.requestPermission()
     return (
-      <div className='wrapper' style={{display: 'flex', flexDirection: 'column'}}>
+      <div className='wrapper'>
         <Titlebar setAppState={this.setAppState} loggedIn={loggedIn}/>
         <Clock
           times={times}

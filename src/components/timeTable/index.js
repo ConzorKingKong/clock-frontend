@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import './index.styl'
 
 export default class TimeTable extends Component {
   constructor (props) {
@@ -11,7 +12,6 @@ export default class TimeTable extends Component {
 
   deleteTime (e) {
     const {id} = e.target
-    // get id and post to database
     axios.post("http://localhost:3000/api/deletetime", {id})
       .then(res => {
         const {times} = res.data.value
@@ -38,14 +38,10 @@ export default class TimeTable extends Component {
     return this.props.times.map((time, i) => {
       const {_id, hours, minutes, seconds, ampm, days} = time
       return (
-        <div key={_id} style={{display: 'flex', flexDirection: 'row'}}>
-          <p>{hours}:</p>
-          <p>{minutes}:</p>
-          <p>{seconds}</p>
-          <p>{ampm}</p>
-          <p>{days.map(day => {return `${dayKey[day]} `})}</p>
-          <button id={_id} onClick={this.deleteTime}>Delete</button>
+        <div key={_id} className="time-table">
+          <p>{hours}:{minutes}:{seconds} {ampm} {days.map(day => {return `${dayKey[day]} `})}</p>
           <button id={_id} data-_id={_id} data-hours={hours} data-minutes={minutes} data-seconds={seconds} data-ampm={ampm} data-days={days} onClick={this.props.editTime}>Edit</button>
+          <button id={_id} onClick={this.deleteTime}>Delete</button>
         </div>
       )
     })

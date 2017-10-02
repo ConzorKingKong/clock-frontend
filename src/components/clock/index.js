@@ -23,6 +23,7 @@ export default class Clock extends Component {
     this.editTime = this.editTime.bind(this)
     this.setClockState = this.setClockState.bind(this)
     this.onCheckChange = this.onCheckChange.bind(this)
+    this.cleanNums = this.cleanNums.bind(this)
   }
 
   setClockState (e) {
@@ -72,15 +73,43 @@ export default class Clock extends Component {
 
   }
 
+  cleanNums (num) {
+    if (num.toString().length === 1) {
+      num = `0${num}`
+    }
+    return num
+  }
+
   render () {
     const {_id, hours, minutes, seconds, ampm, days} = this.state
     const {loggedIn, date} = this.props
     const daysKey = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
+
+    const day = date.getDay()
+    const month = this.cleanNums(date.getMonth() + 1)
+    const dateOfMonth = this.cleanNums(date.getDate())
+    const year = date.getFullYear()
+    const clockMinutes = this.cleanNums(date.getMinutes())
+    const clockSeconds = this.cleanNums(date.getSeconds())
+    let clockHours = date.getHours()
+    let clockAmpm = 'AM'
+
+    if (clockHours === 12) {
+      clockAmpm = 'PM'
+    } else if (clockHours >= 13 && clockHours !== 24) {
+      clockHours = clockHours - 12
+      clockAmpm = 'PM'
+    } else if (clockHours === 24) {
+      clockHours = clockHours - 12
+    }
+
+    clockHours = this.cleanNums(clockHours)
+
     return (
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div>
-          <p>{daysKey[date.getDay()]} {date.getMonth() + 1} {date.getDate()} {date.getYear()}</p>
-          <p>{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</p>
+      <div>
+        <div style={{position: 'absolute', top: '50%', left: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <p>{daysKey[day]} {month}-{dateOfMonth}-{year}</p>
+          <p>{clockHours}:{clockMinutes}:{clockSeconds} {clockAmpm}</p>
         </div>
         { loggedIn && <TimeTable
                         setAppState={this.props.setAppState}

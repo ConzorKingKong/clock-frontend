@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import './index.styl'
 
 export default class Logout extends Component {
   constructor (props) {
@@ -17,7 +18,7 @@ export default class Logout extends Component {
 
   render () {
     return (
-      <button onClick={this.onButtonClick}>Logout</button>
+      <button className="logout-button" onClick={this.onButtonClick}>Logout</button>
     )
   }
 }
