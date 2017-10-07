@@ -43,7 +43,7 @@ export default class TimeForm extends Component {
           hours: "01",
           minutes: "00",
           seconds: "00",
-          ampm: 'am',
+          ampm: 'AM',
           days: [],
           error: ''
         })
@@ -58,26 +58,28 @@ export default class TimeForm extends Component {
   render () {
     const {hours, minutes, seconds, ampm, days, error} = this.props
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
         <p>{this.state.error}</p>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <h5>Hours</h5>
-            <h5>Minutes</h5>
-            <h5>Seconds</h5>
-          </div>
-          <div>
-            <input type="number" name="hours" min="01" max="12" onChange={this.props.onNumberChange} value={hours} />
-            <input type="number" name="minutes" min="00" max="59" onChange={this.props.onNumberChange} value={minutes} />
-            <input type="number" name="seconds" min="00" max="59" onChange={this.props.onNumberChange} value={seconds} />
+            <div>
+              <h5>Hours</h5>
+              <input type="number" name="hours" min="01" max="12" onChange={this.props.onNumberChange} value={hours} />
+            </div>
+            <div>
+              <h5>Minutes</h5>
+              <input type="number" name="minutes" min="00" max="59" onChange={this.props.onNumberChange} value={minutes} />
+            </div>
+            <div>
+              <h5>Seconds</h5>
+              <input type="number" name="seconds" min="00" max="59" onChange={this.props.onNumberChange} value={seconds} />
+            </div>
             <select name="ampm" value={ampm} onChange={this.props.onSelectChange} >
-              <option value="am">AM</option>
-              <option value="pm">PM</option>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
             </select>
           </div>
-        </div>
-        <fieldset>
+        <fieldset className="form-fieldset">
           <div>
             <input ref={d => {this.sunday = d}} onChange={this.props.onCheckChange} type="checkbox" name="sunday" value="0" checked={days.includes(0) && true}/>
             <label>Sunday</label>

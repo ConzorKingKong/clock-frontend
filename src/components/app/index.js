@@ -71,6 +71,10 @@ export default class App extends Component {
     }
     
     this.worker.postMessage(this.state.times)
+
+    document.body.addEventListener("mousedown", (e) => {
+      if (this.state.loggedIn) Notification.requestPermission()    
+    })
     
   }
   
@@ -90,7 +94,6 @@ export default class App extends Component {
   render () {
     const {loggedIn, times, date, alarm} = this.state
     // TODO if else to handle notification. if permission
-    if (loggedIn) Notification.requestPermission()
     return (
       <div className='wrapper'>
         <Titlebar setAppState={this.setAppState} loggedIn={loggedIn}/>

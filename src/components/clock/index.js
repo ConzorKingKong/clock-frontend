@@ -3,7 +3,7 @@ import axios from 'axios'
 import TimeTable from '../timeTable'
 import TimeForm from '../timeForm'
 
-import './clock.css'
+import './clock.styl'
 
 export default class Clock extends Component {
   constructor (props) {
@@ -14,7 +14,7 @@ export default class Clock extends Component {
       hours: "01",
       minutes: "00",
       seconds: "00",
-      ampm: 'am',
+      ampm: 'AM',
       days: [],
       error: ''
     }
@@ -107,7 +107,7 @@ export default class Clock extends Component {
 
     return (
       <div>
-        <div style={{position: 'absolute', top: '50%', left: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div className="clock-display-time">
           <p>{daysKey[day]} {month}-{dateOfMonth}-{year}</p>
           <p>{clockHours}:{clockMinutes}:{clockSeconds} {clockAmpm}</p>
         </div>
