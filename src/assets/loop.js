@@ -32,3 +32,7 @@ onmessage = function(e) {
     })
   })
 }
+
+onerror = function (e) {
+  console.log("inside service worker error", e)
+}

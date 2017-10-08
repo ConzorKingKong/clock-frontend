@@ -33,11 +33,7 @@ export default class App extends Component {
     
     this.onButtonClick = this.onButtonClick.bind(this)
     this.setAppState = this.setAppState.bind(this)
-    
-    // TODO handle if else no worker
-    // TODO find how multiple workers spawn(?)
-    
-    
+    this.notificationListener = this.notificationListener.bind(this)
   }
 
   componentWillMount () {
@@ -52,6 +48,8 @@ export default class App extends Component {
     .catch(err => {
       console.log("app error ", err)
     })
+    
+    // TODO handle if else no worker
     
     this.worker = new Worker(loop)
     this.worker.onmessage = (e) => {
@@ -69,17 +67,25 @@ export default class App extends Component {
         })
       }
     }
+
+    this.worker.onerror = (e) => {
+      console.log("outside service worker error", e)
+    }
     
     this.worker.postMessage(this.state.times)
 
-    document.body.addEventListener("mousedown", (e) => {
-      if (this.state.loggedIn) Notification.requestPermission()    
-    })
-    
+    if ("Notification" in window) {
+      document.body.addEventListener("click", this.notificationListener)
+    }
   }
   
   componentWillUnmount () {
     this.worker.terminate()
+    document.body.removeEventListener(this.notificationListener)
+  }
+
+  notificationListener () {
+    if (this.state.loggedIn && (Notification.permission !== 'denied' || Notification.permission === 'default')) Notification.requestPermission()
   }
 
   setAppState (e) {
@@ -93,7 +99,6 @@ export default class App extends Component {
 
   render () {
     const {loggedIn, times, date, alarm} = this.state
-    // TODO if else to handle notification. if permission
     return (
       <div className='wrapper'>
         <Titlebar setAppState={this.setAppState} loggedIn={loggedIn}/>
