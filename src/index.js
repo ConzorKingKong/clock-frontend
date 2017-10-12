@@ -2,9 +2,6 @@ import './index.styl'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router, browserHistory} from 'react-router'
-import routes from './routes'
+import App from './components/app'
 
-ReactDOM.render(
-  <Router routes={routes} history={browserHistory} />
-    , document.querySelector('.container'))
+ReactDOM.render(<App />, document.querySelector('.container'))
