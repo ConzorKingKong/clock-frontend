@@ -1,7 +1,8 @@
 onmessage = function(e) {
   const times = e.data
+  const date = new Date()
   if (times.length === 0) {
-    self.postMessage({date: new Date()})
+    self.postMessage({date})
     return
   }
   times.forEach((time, timeIndex) => {
@@ -11,24 +12,16 @@ onmessage = function(e) {
     const secondsParsed = parseInt(seconds)
     if (ampm === "pm" && hoursParsed !== 12) hoursParsed = hoursParsed + 12
     if (ampm === "am" && hoursParsed === 12) hoursParsed = 0
-    if (hoursParsed !== new Date().getHours()) {
-      postMessage({date: new Date()})
-      return
-    }
-    if (minutesParsed !== new Date().getMinutes()) {
-      postMessage({date: new Date()})
-      return
-    }
-    if (secondsParsed !== new Date().getSeconds()) {
-      postMessage({date: new Date()})
+    if (hoursParsed !== date.getHours() || minutesParsed !== date.getMinutes() || secondsParsed !== date.getSeconds()) {
+      postMessage({date})
       return
     }
     days.forEach(day => {
-      if (day !== new Date().getDay()) {
-        postMessage({date: new Date()})
+      if (day !== date.getDay()) {
+        postMessage({date})
         return
       }
-      postMessage({time, day, date: new Date()})
+      postMessage({time, day, date})
     })
   })
 }

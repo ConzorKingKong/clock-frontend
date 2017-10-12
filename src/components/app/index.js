@@ -21,15 +21,15 @@ export default class App extends Component {
       alarm: false
     }
 
-    const dayKey = {
-      0: "sunday",
-      1: "monday",
-      2: "tuesday",
-      3: "wednesday",
-      4: "thursday",
-      5: "friday",
-      6: "saturday"
-    }
+    const dayKey = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday"
+    ]
     
     this.onButtonClick = this.onButtonClick.bind(this)
     this.setAppState = this.setAppState.bind(this)
@@ -55,7 +55,7 @@ export default class App extends Component {
     this.worker.onmessage = (e) => {
       this.setState({date: e.data.date})
       if (Object.keys(e.data).length === 1) {
-        setTimeout(() => {this.worker.postMessage(this.state.times)}, 250)
+        setTimeout(() => {this.worker.postMessage(this.state.times)}, 1000)
       } else {
         console.log(e.data)
         const {hours, minutes, seconds, ampm} = e.data.time
