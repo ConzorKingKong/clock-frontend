@@ -38,7 +38,7 @@ export default class Titlebar extends Component {
     const {login, register} = this.state
     const {loggedIn} = this.props
     return (
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+      <div className="titlebar-wrapper">
         {!loggedIn && <div className="button-wrapper">
           {!loggedIn && <button className="login-button" name="login" onClick={this.onButtonClick}>Log In</button>}
           { login && <Login setAppState={this.props.setAppState} setLoginState={this.setLoginState}/> }

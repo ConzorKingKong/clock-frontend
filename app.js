@@ -3,15 +3,13 @@ var app = express()
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
-var PORT = 3000
+var PORT = process.env.PORT || 3000
 var path = require('path')
 var controllers = require('./controllers.js')
 
-// Replace the first string in the keys array with a env variable in deployment
-
 app.use(cookieSession({
     name: 'session',
-    keys: ['test'],
+    keys: [process.env.SECRET],
     maxAge: 90 * 24 * 60 * 60 * 1000
 }))
 

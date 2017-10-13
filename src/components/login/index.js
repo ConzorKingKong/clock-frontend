@@ -63,7 +63,7 @@ export default class Login extends Component {
           loggedIn,
           times
         })
-        this.setState({email: '', password: '', error: ''})
+        this.setState({email: '', password: '', error: '', errorEmail: ''})
       })
       .catch(err => {
         const {data} = err.response
@@ -71,6 +71,7 @@ export default class Login extends Component {
         this.setState({
           email: '',
           password: '',
+          errorEmail: '',
           error: data.error
         })
       })

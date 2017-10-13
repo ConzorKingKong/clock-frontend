@@ -19,7 +19,7 @@ export default class TimeTable extends Component {
           times
         })
       })
-      .catch( err => {
+      .catch(err => {
         console.log("err ", err)
       })
   }

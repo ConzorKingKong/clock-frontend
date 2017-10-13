@@ -71,12 +71,15 @@ export default class Register extends Component {
     e.preventDefault()
     const {email, username, password, verifyPassword, error, errorEmail, errorUsername, errorPassword} = this.state
     const emailRegex = /\S+@\S+\.\S+/
-    // handle not matching passwords
-   if (email === '' || username === '' || password === '' || verifyPassword === '') {
-     this.setState({error: 'Cannot have blank fields'})
-     return
-   }
-  if (!emailRegex.test(email) || username.match("@") !== null || password !== verifyPassword) return
+    if (email === '' || username === '' || password === '' || verifyPassword === '') {
+      this.setState({error: 'Cannot have blank fields'})
+      return
+    }
+    if (!emailRegex.test(email) || username.match("@") !== null) return
+    if (password !== verifyPassword) {
+      this.setState({error: '', errorPassword: 'Passwords do not match'})
+      return
+    }
     axios.post("http://localhost:3000/api/signup", {email: email.toLowerCase(), username: username.toLowerCase(), password: password}, {headers: {"Content-Type": "application/json"}})
       .then(res => {
         const {data} = res

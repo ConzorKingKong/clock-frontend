@@ -10,9 +10,11 @@ onmessage = function(e) {
     let hoursParsed = parseInt(hours)
     const minutesParsed = parseInt(minutes)
     const secondsParsed = parseInt(seconds)
-    if (ampm === "pm" && hoursParsed !== 12) hoursParsed = hoursParsed + 12
-    if (ampm === "am" && hoursParsed === 12) hoursParsed = 0
-    if (hoursParsed !== date.getHours() || minutesParsed !== date.getMinutes() || secondsParsed !== date.getSeconds()) {
+    if (ampm === "PM" && hoursParsed !== 12) hoursParsed = hoursParsed + 12
+    if (ampm === "AM" && hoursParsed === 12) hoursParsed = 0
+    if (hoursParsed !== date.getHours() ||
+    minutesParsed !== date.getMinutes() ||
+    secondsParsed !== date.getSeconds()) {
       postMessage({date})
       return
     }
@@ -27,5 +29,5 @@ onmessage = function(e) {
 }
 
 onerror = function (e) {
-  console.log("inside service worker error", e)
+  console.log("error inside service worker", e)
 }

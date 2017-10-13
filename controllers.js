@@ -17,7 +17,6 @@ module.exports.signup = function(req, res) {
     if (user !== null) {
       res.status(401).send({error: 'User already exists!', loggedIn: false})
     } else {
-      // set up schema and handle bad schema
       var hashedPassword = bcrypt.hash(req.body.password, salt, function(err, hash) {
         if (err) {
           console.log(err)
@@ -32,7 +31,7 @@ module.exports.signup = function(req, res) {
         }, function(err, user) {
           if (err) {
             console.log(err)
-            res.status(401).send({error: 'error', loggedIn: false})
+            res.status(401).send({error: 'Error', loggedIn: false})
           } else {
             req.session.id = user.ops[0]._id
             res.status(200).send({times: user.ops[0].times, loggedIn: true})
@@ -47,10 +46,10 @@ module.exports.signin = function(req, res) {
   users.findOne({email: req.body.email}, function(err, user) {
     if (err) {
       console.log(err)
-      res.status(401).send({error: 'error', loggedIn: false})
+      res.status(401).send({error: 'Error', loggedIn: false})
     } else if (user === null) {
       res.status(401)
-      res.json({'error': 'no user', 'loggedIn': false})
+      res.json({'error': 'No user', 'loggedIn': false})
     } else {
       bcrypt.compare(req.body.password, user.password, function(err, answer) {
         if (err) {
@@ -61,7 +60,7 @@ module.exports.signin = function(req, res) {
           req.session.id = user._id
           res.status(200).send({times: user.times, loggedIn: true})
         } else {
-          res.status(401).send({error: 'incorrect password', loggedIn: false})
+          res.status(401).send({error: 'Incorrect password', loggedIn: false})
         }
       })
     }
@@ -89,12 +88,12 @@ module.exports.addtime = function(req, res) {
     users.findOneAndUpdate({_id: new ObjectId(req.session.id), "times._id": new ObjectId(newTime._id)}, {$set: {"times.$": newTime}}, function(err, answer) {
       if (err) {
         console.log(err)
-        res.status(401).send('error')
+        res.status(401).send('Error')
       } else {
         users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
           if (err) {
             console.log(err)
-            res.status(401).send('error')
+            res.status(401).send('Error')
           } else {
             res.status(200).send(user.times)
           }
@@ -107,7 +106,7 @@ module.exports.addtime = function(req, res) {
     users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
       if (err) {
         console.log(err)
-        res.status(401).send('error')
+        res.status(401).send('Error')
       } else {
         user.times.forEach(function(time) {
           if (time.hours === newTime.hours && time.minutes === newTime.minutes && time.seconds === newTime.seconds && time.ampm === newTime.ampm) {
@@ -120,12 +119,12 @@ module.exports.addtime = function(req, res) {
           users.findOneAndUpdate({_id: new ObjectId(req.session.id)}, {$addToSet: {times: newTime} }, function(err, user) {
             if (err) {
               console.log(err)
-              res.status(401).send('error')
+              res.status(401).send('Error')
             } else {
               users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
                 if (err) {
                   console.log(err)
-                  res.status(401).send('error')
+                  res.status(401).send('Error')
                 } else {
                   res.status(200).send(user.times)
                 }
@@ -146,7 +145,7 @@ module.exports.deletetime = function(req, res) {
     {$pull: {times: {_id: new ObjectId(req.body.id)}}}, function(err, newTimes) {
     if (err) {
       console.log(err)
-      res.status(401).send("error")
+      res.status(401).send("Error")
     }
     if (newTimes) {
       const {times} = newTimes.value
@@ -166,7 +165,7 @@ module.exports.loginstatus = function(req, res) {
         console.log(err)
         delete req.session.id
         delete req.session
-        res.status(401).send({error: 'error checking status. you have been logged out', loggedIn: false, times: []})
+        res.status(401).send({error: 'Error checking status. you have been logged out', loggedIn: false, times: []})
       } else {
         res.status(200).send({times: user.times, loggedIn: true})
       }

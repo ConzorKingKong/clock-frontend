@@ -61,7 +61,7 @@ export default class TimeForm extends Component {
       <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
         <p>{this.state.error}</p>
-          <div style={{display: 'flex', flexDirection: 'row'}}>
+          <div className="time-form-inputs">
             <div>
               <h5>Hours</h5>
               <input type="number" name="hours" min="01" max="12" onChange={this.props.onNumberChange} value={hours} />
