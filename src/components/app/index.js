@@ -36,7 +36,7 @@ export default class App extends Component {
     this.notificationListener = this.notificationListener.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     axios.get('http://localhost:3000/api/loginstatus')
     .then(res => {
       const {loggedIn, times} = res.data
@@ -55,13 +55,12 @@ export default class App extends Component {
     this.worker.onmessage = (e) => {
       this.setState({date: e.data.date})
       if (Object.keys(e.data).length === 1) {
-        setTimeout(() => {this.worker.postMessage(this.state.times)}, 1000)
+        return
       } else {
         console.log(e.data)
         const {hours, minutes, seconds, ampm} = e.data.time
         const {day} = e.data
         const alarmNotification = new Notification("Alarm Clock", {body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`})
-        setTimeout(() => {this.worker.postMessage(this.state.times)}, 1000)
         this.setState({
           alarm: true
         })
@@ -72,7 +71,7 @@ export default class App extends Component {
       console.log("outside service worker error", e)
     }
     
-    this.worker.postMessage(this.state.times)
+    setInterval(() => {this.worker.postMessage(this.state.times)}, 250)
 
     if ("Notification" in window) {
       document.body.addEventListener("click", this.notificationListener)
