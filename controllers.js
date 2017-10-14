@@ -2,9 +2,10 @@ var mongo = require('mongodb').MongoClient
 var bcrypt = require('bcryptjs')
 var salt = 10
 var ObjectId = require('mongodb').ObjectId
+var MONGO_URL = process.env.MONGODB_URI || 'mongodb://127.0.0.1/clock'
 var users = ''
 
-mongo.connect('mongodb://127.0.0.1/clock', function(err, conn) {
+mongo.connect(MONGO_URL, function(err, conn) {
   if (err)  {
     console.log(err)
     return

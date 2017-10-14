@@ -6,10 +6,11 @@ var cookieSession = require('cookie-session')
 var PORT = process.env.PORT || 3000
 var path = require('path')
 var controllers = require('./controllers.js')
+var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
 
 app.use(cookieSession({
     name: 'session',
-    keys: [process.env.SECRET],
+    keys: [SUPER_SECRET],
     maxAge: 90 * 24 * 60 * 60 * 1000
 }))
 
