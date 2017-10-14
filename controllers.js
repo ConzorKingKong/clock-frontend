@@ -59,7 +59,6 @@ module.exports.signin = function(req, res) {
         }
         if (answer) {
           req.session.id = user._id
-          console.log(req.session)
           res.status(200).send({times: user.times, loggedIn: true})
         } else {
           res.status(401).send({error: 'Incorrect password', loggedIn: false})

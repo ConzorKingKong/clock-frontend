@@ -8,8 +8,6 @@ var path = require('path')
 var controllers = require('./controllers.js')
 var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
 
-
-
 app.use(cookieSession({
     name: 'session',
     keys: [SUPER_SECRET],
