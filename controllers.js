@@ -80,7 +80,7 @@ module.exports.signout = function(req, res) {
 
 module.exports.addtime = function(req, res) {
   if (!req.session.id) {
-    res.send({error: 'You must be logged in', loggedIn: false})
+    res.status(401).send({error: 'You must be logged in', loggedIn: false})
     return
   }
   var newTime = req.body

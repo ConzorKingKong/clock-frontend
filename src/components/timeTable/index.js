@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import './index.styl'
 
-const ROOT_URL = process.env.NODE_ENV === 'development' ?  'http://localhost:3000' : 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
 
 export default class TimeTable extends Component {
   constructor (props) {
@@ -27,6 +27,7 @@ export default class TimeTable extends Component {
   }
 
   renderTables () {
+
     const dayKey = {
       0: "Sunday",
       1: "Monday",
@@ -36,7 +37,7 @@ export default class TimeTable extends Component {
       5: "Friday",
       6: "Saturday"
     }
-
+    console.log(this.props)
     return this.props.times.map((time, i) => {
       const {_id, hours, minutes, seconds, ampm, days} = time
       return (
