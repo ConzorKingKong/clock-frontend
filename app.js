@@ -19,7 +19,11 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.use(function (req, res, next) {
-    if (req.header['x-forwarded-proto'] !== 'https') res.redirect('https://conzorkingkongclock.herokuapp.com' + req.url)
+  if (req.header['x-forwarded-proto'] !== 'https') {
+    res.redirect(302, 'https://conzorkingkongclock.herokuapp.com' + req.originalUrl)
+  } else {
+    next()
+  }
 })
 
 app.use(function (req, res, next) {
