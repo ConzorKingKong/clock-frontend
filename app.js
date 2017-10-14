@@ -9,9 +9,7 @@ var controllers = require('./controllers.js')
 var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
 
 app.use(function (req, res, next) {
-  console.log("outside https")
   if (req.headers['x-forwarded-proto'] !== 'https') {
-    console.log("inside")
     res.redirect(302, 'https://' + req.hostname + req.originalUrl)
   } else {
     next()
@@ -29,7 +27,6 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.use(function (req, res, next) {
-  console.log("setting headers")
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
