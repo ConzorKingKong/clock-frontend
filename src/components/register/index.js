@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://conzorkingkongclock.herokuapp.com' : 'http://localhost:3000'
+const ROOT_URL = process.env.NODE_ENV === 'development' ?  'http://localhost:3000' : 'https://conzorkingkongclock.herokuapp.com'
 
 export default class Register extends Component {
   constructor (props) {
