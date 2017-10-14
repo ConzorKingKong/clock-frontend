@@ -8,19 +8,16 @@ var path = require('path')
 var controllers = require('./controllers.js')
 var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
 
-app.use(cookieSession({
-    name: 'session',
-    keys: [SUPER_SECRET],
-    maxAge: 90 * 24 * 60 * 60 * 1000
-}))
-
-app.use(bodyParser.json())
-
-app.use(express.static('public'))
-
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    cookieSession({
+        name: 'session',
+        keys: [SUPER_SECRET],
+        maxAge: 90 * 24 * 60 * 60 * 1000
+    })
+    bodyParser.json()
+    express.static('public')
     next()
 })
 
