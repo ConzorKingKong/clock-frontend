@@ -37,7 +37,7 @@ export default class TimeTable extends Component {
       5: "Friday",
       6: "Saturday"
     }
-    console.log(this.props)
+
     return this.props.times.map((time, i) => {
       const {_id, hours, minutes, seconds, ampm, days} = time
       return (

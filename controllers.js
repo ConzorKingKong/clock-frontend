@@ -34,6 +34,7 @@ module.exports.signup = function(req, res) {
             console.log(err)
             res.status(401).send({error: 'Error', loggedIn: false})
           } else {
+            console.log(user.ops)
             req.session.id = user.ops[0]._id
             res.status(200).send({times: user.ops[0].times, loggedIn: true})
           }
@@ -80,7 +81,6 @@ module.exports.signout = function(req, res) {
 
 module.exports.addtime = function(req, res) {
   console.log("request", req)
-  console.log("request.session", req.session)
   if (!req.session.id) {
     res.status(401).send({error: 'You must be logged in', loggedIn: false})
     return
