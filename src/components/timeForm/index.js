@@ -13,6 +13,7 @@ export default class TimeForm extends Component {
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onButtonPress = this.onButtonPress.bind(this)
   }
 
   onFormSubmit (e) {
@@ -58,13 +59,19 @@ export default class TimeForm extends Component {
       })
   }
 
+  onButtonPress () {
+    const {formClear} = this.props
+    formClear()
+    this.setState({error: ''})
+  }
+
   render () {
-    const {hours, minutes, seconds, ampm, days, error, _id, onNumberChange, onSelectChange, onCheckChange, formClear} = this.props
+    const {hours, minutes, seconds, ampm, days, error, _id, onNumberChange, onSelectChange, onCheckChange} = this.props
     return (
       <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
         <p>{this.state.error}</p>
-        { _id !== '' && <button onClick={formClear}>Cancel</button> }
+        { _id !== '' && <button onClick={this.onButtonPress}>Cancel</button> }
           <div className="time-form-inputs">
             <div>
               <h5>Hours</h5>
