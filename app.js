@@ -20,7 +20,7 @@ app.use(express.static('public'))
 
 app.use(function (req, res, next) {
   if (req.header['x-forwarded-proto'] !== 'https') {
-    res.redirect(302, 'https://conzorkingkongclock.herokuapp.com' + req.originalUrl)
+    res.redirect(302, 'https://conzorkingkongclock.herokuapp.com/')
   } else {
     next()
   }
