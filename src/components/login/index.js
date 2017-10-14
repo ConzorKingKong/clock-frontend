@@ -57,7 +57,8 @@ export default class Login extends Component {
 
   onFormSubmit (e) {
     e.preventDefault()
-    const {email, password} = this.state
+    let {email, password} = this.state
+    email = email.toLowerCase()
     axios.post(`${ROOT_URL}/api/signin`, {email, password})
       .then(res => {
         const {loggedIn, times} = res.data
