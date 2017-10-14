@@ -19,7 +19,9 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.use(function (req, res, next) {
+  console.log("outside https")
   if (req.header['x-forwarded-proto'] !== 'https') {
+    console.log("inside")
     res.redirect(302, 'https://conzorkingkongclock.herokuapp.com/')
   } else {
     next()
@@ -27,6 +29,7 @@ app.use(function (req, res, next) {
 })
 
 app.use(function (req, res, next) {
+  console.log("setting headers")
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     next()
