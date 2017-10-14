@@ -31,6 +31,7 @@ export default class App extends Component {
   }
 
   componentDidMount () {
+    console.log(process.env.NODE_ENV)
     axios.get(`${ROOT_URL}/api/loginstatus`)
     .then(res => {
       const {loggedIn, times} = res.data
