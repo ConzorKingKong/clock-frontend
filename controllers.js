@@ -84,26 +84,42 @@ module.exports.addtime = function(req, res) {
     return
   }
   var newTime = req.body
+  var cont = true
   if (newTime._id !== '') {
     newTime._id = new ObjectId(newTime._id)
-    users.findOneAndUpdate({_id: new ObjectId(req.session.id), "times._id": new ObjectId(newTime._id)}, {$set: {"times.$": newTime}}, function(err, answer) {
+    users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
       if (err) {
         console.log(err)
         res.status(401).send({error: 'Error', loggedIn: true})
       } else {
-        users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
-          if (err) {
-            console.log(err)
-            res.status(401).send({error: 'Error', loggedIn: true})
-          } else {
-            res.status(200).send(user.times)
+        user.times.forEach(function(time) {
+          if (time.hours === newTime.hours && time.minutes === newTime.minutes && time.seconds === newTime.seconds && time.ampm === newTime.ampm) {
+            cont = false
+            res.status(400).send({error: 'Time already exists. Please edit existing time to add new days', loggedIn: true})
+            return
           }
         })
+        if (cont) {
+          users.findOneAndUpdate({_id: new ObjectId(req.session.id), "times._id": new ObjectId(newTime._id)}, {$set: {"times.$": newTime}}, function(err, answer) {
+            if (err) {
+              console.log(err)
+              res.status(401).send({error: 'Error', loggedIn: true})
+            } else {
+              users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
+                if (err) {
+                  console.log(err)
+                  res.status(401).send({error: 'Error', loggedIn: true})
+                } else {
+                  res.status(200).send(user.times)
+                }
+              })
+            }
+          })
+        }
       }
     })
   } else {
     newTime._id = new ObjectId()
-    var cont = true
     users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
       if (err) {
         console.log(err)
