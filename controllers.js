@@ -34,7 +34,6 @@ module.exports.signup = function(req, res) {
             console.log(err)
             res.status(401).send({error: 'Error', loggedIn: false})
           } else {
-            console.log(user.ops)
             req.session.id = user.ops[0]._id
             res.status(200).send({times: user.ops[0].times, loggedIn: true})
           }
@@ -59,6 +58,7 @@ module.exports.signin = function(req, res) {
           return
         }
         if (answer) {
+          console.log(user)
           req.session.id = user._id
           res.status(200).send({times: user.times, loggedIn: true})
         } else {
