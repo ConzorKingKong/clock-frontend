@@ -36,7 +36,13 @@ app.use(function (req, res, next) {
 })
 
 app.get('/', function(req, res) {
+  console.log("outside https")
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    console.log("inside")
+    res.redirect(302, 'https://' + req.hostname + req.originalUrl)
+  } else {
     res.sendFile(path.join(__dirname, 'index.html'))
+  }
 })
 
 app.post('/api/signup', controllers.signup)
