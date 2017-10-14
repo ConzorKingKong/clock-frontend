@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
   console.log("outside https")
   if (req.header['x-forwarded-proto'] !== 'https') {
     console.log("inside")
-    res.redirect(302, 'https://conzorkingkongclock.herokuapp.com/')
+    res.redirect(302, 'https://conzorkingkongclock.herokuapp.com/' + req.originalUrl)
   } else {
     next()
   }
