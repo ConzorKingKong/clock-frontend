@@ -79,6 +79,8 @@ module.exports.signout = function(req, res) {
 }
 
 module.exports.addtime = function(req, res) {
+  console.log("request", req)
+  console.log("request.session", req.session)
   if (!req.session.id) {
     res.status(401).send({error: 'You must be logged in', loggedIn: false})
     return
