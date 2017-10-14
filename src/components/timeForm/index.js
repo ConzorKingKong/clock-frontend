@@ -52,9 +52,9 @@ export default class TimeForm extends Component {
         this.setState({error: ''})
       })
       .catch(err => {
-        const {data} = err.response
-        this.setState({error: data.error})
-        this.props.setAppState({loggedIn: data.loggedIn})
+        const {error, loggedIn} = err.response.data
+        this.setState({error})
+        this.props.setAppState({loggedIn})
       })
   }
 

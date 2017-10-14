@@ -79,7 +79,6 @@ module.exports.signout = function(req, res) {
 }
 
 module.exports.addtime = function(req, res) {
-  console.log("request", req)
   if (!req.session.id) {
     res.status(401).send({error: 'You must be logged in', loggedIn: false})
     return
@@ -90,12 +89,12 @@ module.exports.addtime = function(req, res) {
     users.findOneAndUpdate({_id: new ObjectId(req.session.id), "times._id": new ObjectId(newTime._id)}, {$set: {"times.$": newTime}}, function(err, answer) {
       if (err) {
         console.log(err)
-        res.status(401).send('Error')
+        res.status(401).send({error: 'Error', loggedIn: true})
       } else {
         users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
           if (err) {
             console.log(err)
-            res.status(401).send('Error')
+            res.status(401).send({error: 'Error', loggedIn: true})
           } else {
             res.status(200).send(user.times)
           }
@@ -108,12 +107,12 @@ module.exports.addtime = function(req, res) {
     users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
       if (err) {
         console.log(err)
-        res.status(401).send('Error')
+        res.status(401).send({error: 'Error', loggedIn: true})
       } else {
         user.times.forEach(function(time) {
           if (time.hours === newTime.hours && time.minutes === newTime.minutes && time.seconds === newTime.seconds && time.ampm === newTime.ampm) {
             cont = false
-            res.status(400).send('Time already exists. Please edit existing time to add new days')
+            res.status(400).send({error: 'Time already exists. Please edit existing time to add new days', loggedIn: true})
             return
           }
         })
@@ -121,12 +120,12 @@ module.exports.addtime = function(req, res) {
           users.findOneAndUpdate({_id: new ObjectId(req.session.id)}, {$addToSet: {times: newTime} }, function(err, user) {
             if (err) {
               console.log(err)
-              res.status(401).send('Error')
+              res.status(401).send({error: 'Error', loggedIn: true})
             } else {
               users.findOne({_id: new ObjectId(req.session.id)}, function(err, user) {
                 if (err) {
                   console.log(err)
-                  res.status(401).send('Error')
+                  res.status(401).send({error: 'Error', loggedIn: true})
                 } else {
                   res.status(200).send(user.times)
                 }
