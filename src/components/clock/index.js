@@ -24,10 +24,23 @@ export default class Clock extends Component {
     this.setClockState = this.setClockState.bind(this)
     this.onCheckChange = this.onCheckChange.bind(this)
     this.cleanNums = this.cleanNums.bind(this)
+    this.formClear = this.formClear.bind(this)
   }
 
   setClockState (e) {
     this.setState(e)
+  }
+
+  formClear () {
+    this.setState({
+      _id: '',
+      hours: "01",
+      minutes: "00",
+      seconds: "00",
+      ampm: 'AM',
+      days: [],
+      error: ''
+    })
   }
 
   onNumberChange (e) {
@@ -122,6 +135,7 @@ export default class Clock extends Component {
                         onCheckChange={this.onCheckChange}
                         onSelectChange={this.onSelectChange}
                         onNumberChange={this.onNumberChange}
+                        formClear={this.formClear}
                         _id={_id}
                         hours={hours}
                         minutes={minutes}

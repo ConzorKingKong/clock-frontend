@@ -59,56 +59,57 @@ export default class TimeForm extends Component {
   }
 
   render () {
-    const {hours, minutes, seconds, ampm, days, error} = this.props
+    const {hours, minutes, seconds, ampm, days, error, _id, onNumberChange, onSelectChange, onCheckChange, formClear} = this.props
     return (
       <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
         <p>{this.state.error}</p>
+        { _id !== '' && <button onClick={formClear}>Cancel</button> }
           <div className="time-form-inputs">
             <div>
               <h5>Hours</h5>
-              <input type="number" name="hours" min="01" max="12" onChange={this.props.onNumberChange} value={hours} />
+              <input type="number" name="hours" min="01" max="12" onChange={onNumberChange} value={hours} />
             </div>
             <div>
               <h5>Minutes</h5>
-              <input type="number" name="minutes" min="00" max="59" onChange={this.props.onNumberChange} value={minutes} />
+              <input type="number" name="minutes" min="00" max="59" onChange={onNumberChange} value={minutes} />
             </div>
             <div>
               <h5>Seconds</h5>
-              <input type="number" name="seconds" min="00" max="59" onChange={this.props.onNumberChange} value={seconds} />
+              <input type="number" name="seconds" min="00" max="59" onChange={onNumberChange} value={seconds} />
             </div>
-            <select name="ampm" value={ampm} onChange={this.props.onSelectChange} >
+            <select name="ampm" value={ampm} onChange={onSelectChange} >
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
           </div>
         <fieldset className="form-fieldset">
           <div>
-            <input ref={d => {this.sunday = d}} onChange={this.props.onCheckChange} type="checkbox" name="sunday" value="0" checked={days.includes(0) && true}/>
+            <input ref={d => {this.sunday = d}} onChange={onCheckChange} type="checkbox" name="sunday" value="0" checked={days.includes(0) && true}/>
             <label>Sunday</label>
           </div>
           <div>
-            <input ref={d => {this.monday = d}} onChange={this.props.onCheckChange} type="checkbox" name="monday" value="1" checked={days.includes(1) && true} />
+            <input ref={d => {this.monday = d}} onChange={onCheckChange} type="checkbox" name="monday" value="1" checked={days.includes(1) && true} />
             <label>Monday</label>
           </div>
           <div>
-            <input ref={d => {this.tuesday = d}} onChange={this.props.onCheckChange} type="checkbox" name="tuesday" value="2" checked={days.includes(2) && true} />
+            <input ref={d => {this.tuesday = d}} onChange={onCheckChange} type="checkbox" name="tuesday" value="2" checked={days.includes(2) && true} />
             <label>Tuesday</label>
           </div>
           <div>
-            <input ref={d => {this.wednesday = d}} onChange={this.props.onCheckChange} type="checkbox" name="wednesday" value="3" checked={days.includes(3) && true} />
+            <input ref={d => {this.wednesday = d}} onChange={onCheckChange} type="checkbox" name="wednesday" value="3" checked={days.includes(3) && true} />
             <label>Wednesday</label>
           </div>
           <div>
-            <input ref={d => {this.thursday = d}} onChange={this.props.onCheckChange} type="checkbox" name="thursday" value="4" checked={days.includes(4) && true} />
+            <input ref={d => {this.thursday = d}} onChange={onCheckChange} type="checkbox" name="thursday" value="4" checked={days.includes(4) && true} />
             <label>Thursday</label>
           </div>
           <div>
-            <input ref={d => {this.friday = d}} onChange={this.props.onCheckChange} type="checkbox" name="friday" value="5" checked={days.includes(5) && true} />
+            <input ref={d => {this.friday = d}} onChange={onCheckChange} type="checkbox" name="friday" value="5" checked={days.includes(5) && true} />
             <label>Friday</label>
           </div>
           <div>
-            <input ref={d => {this.saturday = d}} onChange={this.props.onCheckChange} type="checkbox" name="saturday" value="6" checked={days.includes(6) && true} />
+            <input ref={d => {this.saturday = d}} onChange={onCheckChange} type="checkbox" name="saturday" value="6" checked={days.includes(6) && true} />
             <label>Saturday</label>
           </div>
         </fieldset>
