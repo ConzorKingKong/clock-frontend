@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://conzorkingkongclock.herokuapp.com' : 'http://localhost:3000'
+
 export default class Register extends Component {
   constructor (props) {
     super(props)
@@ -80,7 +82,7 @@ export default class Register extends Component {
       this.setState({error: '', errorPassword: 'Passwords do not match'})
       return
     }
-    axios.post("http://localhost:3000/api/signup", {email: email.toLowerCase(), username: username.toLowerCase(), password: password}, {headers: {"Content-Type": "application/json"}})
+    axios.post(`${ROOT_URL}/api/signup`, {email: email.toLowerCase(), username: username.toLowerCase(), password: password}, {headers: {"Content-Type": "application/json"}})
       .then(res => {
         const {data} = res
         this.props.setAppState({loggedIn: data.loggedIn, times: data.times})

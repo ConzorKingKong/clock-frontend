@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://conzorkingkongclock.herokuapp.com' : 'http://localhost:3000'
+
 export default class Login extends Component {
   constructor (props) {
     super(props)
@@ -56,7 +58,7 @@ export default class Login extends Component {
   onFormSubmit (e) {
     e.preventDefault()
     const {email, password} = this.state
-    axios.post("http://localhost:3000/api/signin", {email, password})
+    axios.post(`${ROOT_URL}/api/signin`, {email, password})
       .then(res => {
         const {loggedIn, times} = res.data
         this.props.setAppState({

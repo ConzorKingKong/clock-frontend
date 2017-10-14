@@ -8,6 +8,8 @@ import AlarmModal from '../alarmModal'
 import axios from 'axios'
 import loop from '!!file-loader!../../assets/loop.js'
 
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://conzorkingkongclock.herokuapp.com' : 'http://localhost:3000'
+
 import './index.styl'
 
 export default class App extends Component {
@@ -29,7 +31,7 @@ export default class App extends Component {
   }
 
   componentDidMount () {
-    axios.get('http://localhost:3000/api/loginstatus')
+    axios.get(`${ROOT_URL}/api/loginstatus`)
     .then(res => {
       const {loggedIn, times} = res.data
       this.setState({

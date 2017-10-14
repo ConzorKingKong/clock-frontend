@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import './index.styl'
 
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://conzorkingkongclock.herokuapp.com' : 'http://localhost:3000'
+
 export default class TimeForm extends Component {
   constructor (props) {
     super(props)
@@ -20,7 +22,7 @@ export default class TimeForm extends Component {
       this.setState({error: "You must select at least one day"})
       return
     }
-    axios.post("http://localhost:3000/api/addtime", {_id, hours, minutes, seconds, ampm, days})
+    axios.post(`${ROOT_URL}/api/addtime`, {_id, hours, minutes, seconds, ampm, days})
       .then(res => {
         let {data} = res
         this.props.setAppState({
