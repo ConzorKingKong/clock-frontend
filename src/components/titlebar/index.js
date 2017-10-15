@@ -40,11 +40,11 @@ export default class Titlebar extends Component {
     return (
       <div className="titlebar-wrapper">
         {!loggedIn && <div className="button-wrapper">
-          {!loggedIn && <button className="login-button" name="login" onClick={this.onButtonClick}>Log In</button>}
+          {!loggedIn && <button ref={(r) => { !this.state.loginButton && this.setState({loginButton: r})}} reference={this.state.loginButton} className="login-button" name="login" onClick={this.onButtonClick}>Log In</button>}
           { login && <Login setAppState={this.props.setAppState} setLoginState={this.setLoginState}/> }
         </div>}
         {!loggedIn && <div className="button-wrapper">
-          <button className="register-button" name="register" onClick={this.onButtonClick}>Register</button>
+          <button ref={(r) => { !this.state.registerButton && this.setState({registerButton: r})}} reference={this.state.registerButton} className="register-button" name="register" onClick={this.onButtonClick}>Register</button>
           { register && <Register setAppState={this.props.setAppState} setRegisterState={this.setRegisterState} /> }
         </div>}
         { loggedIn && <Logout setAppState={this.props.setAppState} /> }

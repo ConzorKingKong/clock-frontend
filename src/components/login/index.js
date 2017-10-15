@@ -21,15 +21,17 @@ export default class Login extends Component {
 
   componentWillMount () {
     document.body.addEventListener("click", this.eventListener)
+    document.body.addEventListener("touchend", this.eventListener)
   }
 
   componentWillUnmount () {
     document.body.removeEventListener("click", this.eventListener)
+    document.body.removeEventListener("touchend", this.eventListener)
     this.props.setLoginState()
   }
 
   eventListener (e) {
-    if (!this.loginForm.contains(e.target)) {
+    if (!this.loginForm.contains(e.target) || e.target !== this.props.reference) {
       this.props.setLoginState()
     }
   }

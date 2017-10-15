@@ -26,15 +26,17 @@ export default class Register extends Component {
 
   componentWillMount () {
     document.body.addEventListener("click", this.eventListener)
+    document.body.addEventListener("touchend", this.eventListener)
   }
 
   componentWillUnmount () {
     document.body.removeEventListener("click", this.eventListener)
+    document.body.removeEventListener("touchend", this.eventListener)
     this.props.setRegisterState()
   }
 
   eventListener (e) {
-    if (!this.registerForm.contains(e.target)) {
+    if (!this.registerForm.contains(e.target) || e.target !== this.props.reference) {
       this.props.setRegisterState()
     }
   }
