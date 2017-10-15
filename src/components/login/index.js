@@ -31,9 +31,7 @@ export default class Login extends Component {
   }
 
   eventListener (e) {
-    if (!this.loginForm.contains(e.target) || e.target === this.props.reference) {
-      this.props.setLoginState()
-    }
+    if (e.target === this.props.reference || !this.loginForm.contains(e.target)) this.props.setLoginState()
   }
 
   onInputChange (e) {

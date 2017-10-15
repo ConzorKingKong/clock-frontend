@@ -36,9 +36,7 @@ export default class Register extends Component {
   }
 
   eventListener (e) {
-    if (!this.registerForm.contains(e.target) || e.target === this.props.reference) {
-      this.props.setRegisterState()
-    }
+    if (e.target === this.props.reference || !this.registerForm.contains(e.target)) this.props.setRegisterState()
   }
 
   onInputChange (e) {
