@@ -93,6 +93,7 @@ module.exports.addtime = function(req, res) {
         res.status(401).send({error: 'Error', loggedIn: true})
       } else {
         user.times.forEach(function(time) {
+          console.log(time._id, newTime._id)
           if (time.hours === newTime.hours && time.minutes === newTime.minutes && time.seconds === newTime.seconds && time.ampm === newTime.ampm && time._id !== newTime._id) {
             cont = false
             res.status(400).send({error: 'Time already exists. Please edit existing time to add new days', loggedIn: true})
