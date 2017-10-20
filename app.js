@@ -8,13 +8,15 @@ var path = require('path')
 var controllers = require('./controllers.js')
 var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
 
-app.use(function (req, res, next) {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    res.redirect(302, 'https://' + req.hostname + req.originalUrl)
-  } else {
-    next()
-  }
-})
+if (process.env.NODE_ENV === 'production') {
+  app.use(function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      res.redirect(302, 'https://' + req.hostname + req.originalUrl)
+    } else {
+      next()
+    }
+  })
+}
 
 app.use(cookieSession({
     name: 'session',
