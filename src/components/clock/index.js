@@ -120,15 +120,15 @@ export default class Clock extends Component {
 
     return (
       <div>
-        <div className="clock-display-time">
-          <p>{daysKey[day]} {month}-{dateOfMonth}-{year}</p>
-          <p>{clockHours}:{clockMinutes}:{clockSeconds} {clockAmpm}</p>
-        </div>
         { loggedIn && <TimeTable
                         setAppState={this.props.setAppState}
                         times={this.props.times}
                         editTime={this.editTime}
                         /> }
+        <div className="clock-display-time">
+          <p>{daysKey[day]} {month}-{dateOfMonth}-{year}</p>
+          <p>{clockHours}:{clockMinutes}:{clockSeconds} {clockAmpm}</p>
+        </div>
         { loggedIn && <TimeForm
                         setAppState={this.props.setAppState}
                         setClockState={this.setClockState}

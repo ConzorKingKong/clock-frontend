@@ -66,7 +66,11 @@ export default class TimeForm extends Component {
   }
 
   render () {
-    const {hours, minutes, seconds, ampm, days, error, _id, onNumberChange, onSelectChange, onCheckChange} = this.props
+    const {ampm, days, error, _id, onNumberChange, onSelectChange, onCheckChange} = this.props
+    let {hours, minutes, seconds} = this.props
+    hours = JSON.stringify(parseInt(hours)) !== "null" ? parseInt(hours) : ""
+    minutes = JSON.stringify(parseInt(minutes)) !== "null" ? parseInt(minutes) : ""
+    seconds = JSON.stringify(parseInt(seconds)) !== "null" ? parseInt(seconds) : ""
     return (
       <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
@@ -75,15 +79,15 @@ export default class TimeForm extends Component {
           <div className="time-form-inputs">
             <div>
               <h5>Hours</h5>
-              <input type="number" name="hours" min="1" max="12" onChange={onNumberChange} value={parseInt(hours)} />
+              <input type="number" name="hours" min="1" max="12" onChange={onNumberChange} value={hours} />
             </div>
             <div>
               <h5>Minutes</h5>
-              <input type="number" name="minutes" min="0" max="59" onChange={onNumberChange} value={parseInt(minutes)} />
+              <input type="number" name="minutes" min="0" max="59" onChange={onNumberChange} value={minutes} />
             </div>
             <div>
               <h5>Seconds</h5>
-              <input type="number" name="seconds" min="0" max="59" onChange={onNumberChange} value={parseInt(seconds)} />
+              <input type="number" name="seconds" min="0" max="59" onChange={onNumberChange} value={seconds} />
             </div>
             <select name="ampm" value={ampm} onChange={onSelectChange} >
               <option value="AM">AM</option>
