@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
+const ROOT_URL = API_URL || 'http://localhost:3000/api/'
 
 export default class Register extends Component {
   constructor (props) {

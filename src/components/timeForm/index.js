@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import './index.styl'
 
-const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
+const ROOT_URL = API_URL || 'http://localhost:3000/api/'
 
 export default class TimeForm extends Component {
   constructor (props) {

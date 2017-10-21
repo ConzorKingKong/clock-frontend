@@ -8,7 +8,7 @@ import AlarmModal from '../alarmModal'
 import axios from 'axios'
 import loop from '!!file-loader!../../assets/loop.js'
 
-const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
+const ROOT_URL = API_URL || 'http://localhost:3000/api/'
 
 import './index.styl'
 
