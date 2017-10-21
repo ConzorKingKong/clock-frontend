@@ -75,15 +75,15 @@ export default class TimeForm extends Component {
           <div className="time-form-inputs">
             <div>
               <h5>Hours</h5>
-              <input type="number" name="hours" min="01" max="12" onChange={onNumberChange} value={hours} />
+              <input type="number" name="hours" min="1" max="12" onChange={onNumberChange} value={parseInt(hours)} />
             </div>
             <div>
               <h5>Minutes</h5>
-              <input type="number" name="minutes" min="00" max="59" onChange={onNumberChange} value={minutes} />
+              <input type="number" name="minutes" min="0" max="59" onChange={onNumberChange} value={parseInt(minutes)} />
             </div>
             <div>
               <h5>Seconds</h5>
-              <input type="number" name="seconds" min="00" max="59" onChange={onNumberChange} value={seconds} />
+              <input type="number" name="seconds" min="0" max="59" onChange={onNumberChange} value={parseInt(seconds)} />
             </div>
             <select name="ampm" value={ampm} onChange={onSelectChange} >
               <option value="AM">AM</option>
