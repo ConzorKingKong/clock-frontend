@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import './index.styl'
 
-const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
 
 export default class TimeTable extends Component {
   constructor (props) {
@@ -14,7 +14,7 @@ export default class TimeTable extends Component {
 
   deleteTime (e) {
     const {id} = e.target
-    axios.post(`${ROOT_URL}/api/deletetime`, {id})
+    axios.post(`${ROOT_URL}deletetime`, {id})
       .then(res => {
         const {times} = res.data.value
         this.props.setAppState({

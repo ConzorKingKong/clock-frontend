@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import './index.styl'
 
-const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
 
 export default class Logout extends Component {
   constructor (props) {
@@ -12,7 +12,7 @@ export default class Logout extends Component {
   }
   
   onButtonClick () {
-    axios.post(`${ROOT_URL}/api/signout`)
+    axios.post(`${ROOT_URL}signout`)
       .then(res => {
         this.props.setAppState({loggedIn: false, times: []})
       })

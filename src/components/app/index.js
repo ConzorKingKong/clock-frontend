@@ -8,7 +8,7 @@ import AlarmModal from '../alarmModal'
 import axios from 'axios'
 import loop from '!!file-loader!../../assets/loop.js'
 
-const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
 
 import './index.styl'
 
@@ -31,7 +31,7 @@ export default class App extends Component {
   }
 
   componentDidMount () {
-    axios.get(`${ROOT_URL}/api/loginstatus`)
+    axios.get(`${ROOT_URL}loginstatus`)
     .then(res => {
       const {loggedIn, times} = res.data
       this.setState({

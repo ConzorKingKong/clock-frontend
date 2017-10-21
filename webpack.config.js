@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   devtool: 'eval',
@@ -39,6 +40,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html'
+    }),
+    new webpack.DefinePlugin({
+      API_KEY: process.env.API_KEY
     })
   ]
 }

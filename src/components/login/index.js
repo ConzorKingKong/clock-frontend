@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
 
 export default class Login extends Component {
   constructor (props) {
@@ -48,7 +48,7 @@ export default class Login extends Component {
     }
     const emailRegex = /\S+@\S+\.\S+/
     const obj = {}
-    obj[`error${capitalize(name)}`] = ''    
+    obj[`error${capitalize(name)}`] = ''
     if (name === 'email') {
       if (!emailRegex.test(value) && value !== '') obj[`error${capitalize(name)}`] = 'Email is not valid'
     }
@@ -59,7 +59,7 @@ export default class Login extends Component {
     e.preventDefault()
     let {email, password} = this.state
     email = email.toLowerCase()
-    axios.post(`${ROOT_URL}/api/signin`, {email, password})
+    axios.post(`${ROOT_URL}signin`, {email, password})
       .then(res => {
         const {loggedIn, times} = res.data
         this.props.setAppState({

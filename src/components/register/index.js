@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 
-const ROOT_URL = 'https://conzorkingkongclock.herokuapp.com'
+const ROOT_URL = API_KEY || 'http://localhost:3000/api/'
 
 export default class Register extends Component {
   constructor (props) {
@@ -82,7 +82,7 @@ export default class Register extends Component {
       this.setState({error: '', errorPassword: 'Passwords do not match'})
       return
     }
-    axios.post(`${ROOT_URL}/api/signup`, {email: email.toLowerCase(), username: username.toLowerCase(), password: password}, {headers: {"Content-Type": "application/json"}})
+    axios.post(`${ROOT_URL}signup`, {email: email.toLowerCase(), username: username.toLowerCase(), password: password}, {headers: {"Content-Type": "application/json"}})
       .then(res => {
         const {data} = res
         this.props.setAppState({loggedIn: data.loggedIn, times: data.times})
@@ -108,7 +108,7 @@ export default class Register extends Component {
           errorUsername: '',
           errorPassword: '',
           error: data.error
-        })  
+        })
       })
   }
 
