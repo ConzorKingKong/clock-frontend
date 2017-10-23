@@ -18,9 +18,24 @@ export default class TimeForm extends Component {
 
   onFormSubmit (e) {
     e.preventDefault()
-    const {_id, hours, minutes, seconds, ampm, days} = this.props
+    const {_id, ampm, days} = this.props
+    let {hours, minutes, seconds} = this.props
     if (days.length === 0) {
       this.setState({error: "You must select at least one day"})
+      return
+    }
+    hours = parseInt(hours).toString()
+    minutes = parseInt(minutes).toString()
+    seconds = parseInt(seconds).toString()
+    if (hours.match(/[a-z]/i) || minutes.match(/[a-z]/i) || seconds.match(/[a-z]/i)) {
+      this.setState({error: "Your times cannot contain characters that aren't numbers"})
+      return
+    }
+    if (hours.length === 1) hours = "0" + hours
+    if (minutes.length === 1) minutes = "0" + minutes
+    if (seconds.length === 1) seconds = "0" + seconds
+    if (hours.length > 2 || minutes.length > 2 || seconds.length > 2) {
+      this.setState({error: "You cannot have a time longer than 2 digits"})
       return
     }
     axios.post(`${ROOT_URL}addtime`, {_id, hours, minutes, seconds, ampm, days})
