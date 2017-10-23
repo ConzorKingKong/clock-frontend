@@ -38,6 +38,10 @@ export default class TimeForm extends Component {
       this.setState({error: "You cannot have a time longer than 2 digits"})
       return
     }
+    if (parseInt(hours) > 12 || parseInt(minutes) > 59 || parseInt(seconds) > 59) {
+      this.setState({error: "Cannot have impossible times"})
+      return
+    }
     axios.post(`${ROOT_URL}addtime`, {_id, hours, minutes, seconds, ampm, days})
       .then(res => {
         let {data} = res
