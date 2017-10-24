@@ -46,3 +46,5 @@ app.post('/api/deletetime', controllers.deletetime)
 app.get('/api/loginstatus', controllers.loginstatus)
 
 app.listen(PORT)
+
+module.exports = app
