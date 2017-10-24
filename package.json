@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node app.js",
     "build": "webpack --progress --colors --optimize-minimize",
-    "test": "tape test/index.js"
+    "test": "tape test/index.js",
+    "lint": "eslint \"src/**/*.js\""
   },
   "author": "connor",
   "license": "ISC",
@@ -41,5 +42,12 @@
     "url-loader": "^0.5.7",
     "webpack": "2.2.0-rc.2",
     "webpack-dev-server": "2.2.0-rc.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0"
   }
 }

@@ -27,10 +27,9 @@ test('Get /', function(assert) {
 test('login status returns not signed in', function(assert) {
   request(app)
     .get('/api/loginstatus')
-    .expect(200)
+    .expect(200, {loggedIn: false, times: []})
     .expect('Content-Type', /json/)
     .end(function (err, res) {
-      assert.same(res.body.loggedIn, false, 'Returning false because I am not logged In')
       assert.error(err, 'No error')
       assert.end()
     })
