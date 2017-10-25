@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Login from '../login';
 import Register from '../register';
 import Logout from '../logout';
@@ -35,10 +36,11 @@ export default class Titlebar extends Component {
     const {loggedIn} = this.props;
     return (
       <div className="titlebar-wrapper">
-        { !loggedIn && <div className="button-wrapper">
-          { !loggedIn && <button
-            ref={(r) => { !this.state.loginButton && this.setState({loginButton: r}); }}
-            reference={this.state.loginButton}
+        { !loggedIn &&
+        <div className="button-wrapper">
+          { !loggedIn &&
+          <button
+            ref={r => {!this.state.loginButton && this.setState({loginButton: r});}}
             className="login-button"
             name="login"
             onClick={this.onButtonClick}
@@ -46,24 +48,28 @@ export default class Titlebar extends Component {
             Log In
           </button>
           }
-          { login && <Login
+          { login &&
+          <Login
+            reference={this.state.loginButton}
             setAppState={this.props.setAppState}
             setLoginState={this.setLoginState}
           />
           }
         </div>
         }
-        {!loggedIn && <div className="button-wrapper">
+        {!loggedIn &&
+        <div className="button-wrapper">
           <button
-            ref={(r) => { !this.state.registerButton && this.setState({registerButton: r}); }}
-            reference={this.state.registerButton}
+            ref={r => {!this.state.registerButton && this.setState({registerButton: r});}}
             className="register-button"
             name="register"
             onClick={this.onButtonClick}
           >
             Register
           </button>
-          { register && <Register
+          { register &&
+          <Register
+            reference={this.state.registerButton}
             setAppState={this.props.setAppState}
             setRegisterState={this.setRegisterState}
           />
@@ -75,3 +81,8 @@ export default class Titlebar extends Component {
     );
   }
 }
+
+Titlebar.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  setAppState: PropTypes.func.isRequired
+};

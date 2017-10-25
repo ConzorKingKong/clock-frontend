@@ -1,8 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import './index.styl';
 
-const ROOT_URL = API_URL || 'http://localhost:3000/api/';
+const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
 
 export default class TimeTable extends Component {
   constructor(props) {
@@ -82,14 +83,10 @@ export default class TimeTable extends Component {
       </div>
     );
   }
-};
-
-TimeTable.defaultProps = {
-  times: [],
-  editTime: function(){}
-};
+}
 
 TimeTable.propTypes = {
-  times: PropTypes.array,
-  editTime: PropTypes.function
+  times: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editTime: PropTypes.func.isRequired,
+  setAppState: PropTypes.func.isRequired
 };
