@@ -58,9 +58,11 @@ export default class App extends Component {
           } = e.data.time;
           const {day} = e.data;
           const alarmTime = {...e.data.time, day: e.data.day};
-          if (window.Notification) new Notification('Alarm Clock', {
-            body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`
-          });
+          if (window.Notification){
+            new Notification('Alarm Clock', {
+              body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`
+            });
+          }
           this.setState({
             alarm: true,
             alarmTime

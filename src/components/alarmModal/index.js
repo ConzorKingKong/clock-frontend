@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import gong from '../../assets/gong.mp3';
 import './index.styl';
 
@@ -16,7 +17,12 @@ export default class AlarmModal extends Component {
   }
   onButtonClick(e) {
     const {setAppState} = this.props;
-    if (e.target === this.stopButton || !this.modal.contains(e.target)) setAppState({alarm: false, alarmTime: {}});
+    if (e.target === this.stopButton || !this.modal.contains(e.target)) {
+      setAppState({
+        alarm: false,
+        alarmTime: {}
+      });
+    }
   }
   render() {
     const dayKey = [
@@ -44,3 +50,14 @@ export default class AlarmModal extends Component {
     );
   }
 }
+
+AlarmModal.propTypes = {
+  alarmTime: PropTypes.shape({
+    hours: PropTypes.string.isRequired,
+    minutes: PropTypes.string.isRequired,
+    seconds: PropTypes.string.isRequired,
+    ampm: PropTypes.string.isRequired,
+    day: PropTypes.arrayOf(PropTypes.number).isRequired
+  }).isRequired,
+  setAppState: PropTypes.func.isRequired
+};
