@@ -56,18 +56,6 @@ export default class TimeForm extends Component {
         this.props.setAppState({
           times: data
         });
-        const dayButtons = [
-          this.sunday,
-          this.monday,
-          this.tuesday,
-          this.wednesday,
-          this.thursday,
-          this.friday,
-          this.saturday
-        ];
-        dayButtons.forEach(day => {
-          if (day.checked) day.checked = false;
-        });
         this.props.setClockState({
           _id: '',
           hours: '01',
@@ -150,7 +138,6 @@ export default class TimeForm extends Component {
         <fieldset className="form-fieldset">
           <label htmlFor="sunday">
             <input
-              ref={d => {this.sunday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="sunday"
@@ -161,7 +148,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="monday">
             <input
-              ref={d => {this.monday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="monday"
@@ -172,7 +158,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="tuesday">
             <input
-              ref={d => {this.tuesday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="tuesday"
@@ -183,7 +168,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="wednesday">
             <input
-              ref={d => {this.wednesday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="wednesday"
@@ -194,7 +178,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="thursday">
             <input
-              ref={d => {this.thursday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="thursday"
@@ -205,7 +188,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="friday">
             <input
-              ref={d => {this.friday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="friday"
@@ -216,7 +198,6 @@ export default class TimeForm extends Component {
           </label>
           <label htmlFor="saturday">
             <input
-              ref={d => {this.saturday = d;}}
               onChange={onCheckChange}
               type="checkbox"
               name="saturday"

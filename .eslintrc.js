@@ -11,6 +11,7 @@ module.exports = {
     },
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/forbid-prop-types": [0, "never"],
         "object-curly-spacing": [2, "never"],
         "comma-dangle": [2, "never"],
         "arrow-parens": [2, "as-needed"],
