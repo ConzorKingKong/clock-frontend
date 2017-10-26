@@ -4,9 +4,9 @@
   "description": "learning react from the docs",
   "main": "./src/index.js",
   "scripts": {
-    "start": "npm run build && node app.js",
+    "start": "npm run build && node server.js",
     "build": "webpack --progress --colors --optimize-minimize",
-    "test": "tape test/index.js",
+    "test": "jest ./test/server.spec.js",
     "lint": "eslint \"src/**/*.js\""
   },
   "author": "connor",
@@ -31,6 +31,7 @@
     "express-session": "^1.15.5",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.24.1",
+    "jest": "^21.2.1",
     "mongodb": "^2.2.31",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
@@ -49,6 +50,7 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "jest": "^21.2.1"
   }
 }

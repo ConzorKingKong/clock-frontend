@@ -3,7 +3,6 @@ var app = express()
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
-var PORT = process.env.PORT || 3000
 var path = require('path')
 var controllers = require('./controllers.js')
 var SUPER_SECRET = process.env.SECRET || 'VAVAVOOM'
@@ -44,7 +43,5 @@ app.post('/api/signout', controllers.signout)
 app.post('/api/addtime', controllers.addtime)
 app.post('/api/deletetime', controllers.deletetime)
 app.get('/api/loginstatus', controllers.loginstatus)
-
-app.listen(PORT)
 
 module.exports = app
