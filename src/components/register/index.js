@@ -56,8 +56,8 @@ export default class Register extends Component {
       if (!emailRegex.test(value) && value !== '') obj[`error${capitalize(name)}`] = 'Email is not valid';
     } else if (name === 'username') {
       if (value.match('@') !== null) obj[`error${capitalize(name)}`] = 'Invalid Username. Cannot contain @';
-    } else {
-      if (value !== verifyPassword && verifyPassword !== '' || value !== password && password !== '') obj.errorPassword = 'Passwords do not match';
+    } else if (name === 'password' || name === 'verifyPassword') {
+      if ((value !== verifyPassword && verifyPassword !== '') || (value !== password && password !== '')) obj.errorPassword = 'Passwords do not match';
     }
     this.setState(obj);
   }
@@ -117,17 +117,21 @@ export default class Register extends Component {
       email,
       username,
       password,
-      verifyPassword
+      verifyPassword,
+      error,
+      errorEmail,
+      errorUsername,
+      errorPassword
     } = this.state;
     return (
       <form
         ref={r => {this.registerForm = r;}}
         onSubmit={this.onFormSubmit}
       >
-        <p>{this.state.error}</p>
-        <p>{this.state.errorEmail}</p>
-        <p>{this.state.errorUsername}</p>
-        <p>{this.state.errorPassword}</p>
+        <p>{error}</p>
+        <p>{errorEmail}</p>
+        <p>{errorUsername}</p>
+        <p>{errorPassword}</p>
         <h3>Register</h3>
         <input
           onBlur={this.onInputBlur}

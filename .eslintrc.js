@@ -14,6 +14,10 @@ module.exports = {
         "object-curly-spacing": [2, "never"],
         "comma-dangle": [2, "never"],
         "arrow-parens": [2, "as-needed"],
-        "block-spacing": ["error", "never"]
+        "block-spacing": ["error", "never"],
+        "import/no-webpack-loader-syntax": [0, "never"],
+        "import/no-unresolved": [0, "never"],
+        "import/extensions": [0, "never"],
+        "jsx-a11y/media-has-caption": [0, "never"]
       }
 };

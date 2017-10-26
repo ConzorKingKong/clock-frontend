@@ -34,4 +34,4 @@ onmessage = e => {
   });
 };
 
-onerror = e => console.log('error inside service worker', e);
+onerror = e => console.log('error inside service worker', e); // eslint-disable-line no-restricted-globals

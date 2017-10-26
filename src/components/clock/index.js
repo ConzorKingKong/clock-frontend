@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import TimeTable from '../timeTable';
 import TimeForm from '../timeForm';
+import cleanNums from '../../helpers/cleanNums';
 
 import './clock.styl';
 
@@ -21,21 +22,7 @@ export default class Clock extends Component {
     this.editTime = this.editTime.bind(this);
     this.setClockState = this.setClockState.bind(this);
     this.onCheckChange = this.onCheckChange.bind(this);
-    this.cleanNums = this.cleanNums.bind(this);
     this.formClear = this.formClear.bind(this);
-  }
-  setClockState(e) {
-    this.setState(e);
-  }
-  formClear() {
-    this.setState({
-      _id: '',
-      hours: '01',
-      minutes: '00',
-      seconds: '00',
-      ampm: 'AM',
-      days: []
-    });
   }
   onNumberChange(e) {
     const obj = {};
@@ -63,6 +50,19 @@ export default class Clock extends Component {
       });
     }
   }
+  setClockState(e) {
+    this.setState(e);
+  }
+  formClear() {
+    this.setState({
+      _id: '',
+      hours: '01',
+      minutes: '00',
+      seconds: '00',
+      ampm: 'AM',
+      days: []
+    });
+  }
   editTime(e) {
     const {
       _id,
@@ -82,12 +82,6 @@ export default class Clock extends Component {
       days: newDays
     });
   }
-  cleanNums(num) {
-    if (num.toString().length === 1) {
-      num = `0${num}`;
-    }
-    return num;
-  }
   render() {
     const {
       _id,
@@ -105,11 +99,11 @@ export default class Clock extends Component {
     } = this.props;
     const daysKey = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
     const day = date.getDay();
-    const month = this.cleanNums(date.getMonth() + 1);
-    const dateOfMonth = this.cleanNums(date.getDate());
+    const month = cleanNums(date.getMonth() + 1);
+    const dateOfMonth = cleanNums(date.getDate());
     const year = date.getFullYear();
-    const clockMinutes = this.cleanNums(date.getMinutes());
-    const clockSeconds = this.cleanNums(date.getSeconds());
+    const clockMinutes = cleanNums(date.getMinutes());
+    const clockSeconds = cleanNums(date.getSeconds());
     let clockHours = date.getHours();
     let clockAmpm = 'AM';
     if (clockHours === 12) {
@@ -120,7 +114,7 @@ export default class Clock extends Component {
     } else if (clockHours === 24) {
       clockHours -= 12;
     }
-    clockHours = this.cleanNums(clockHours);
+    clockHours = cleanNums(clockHours);
     return (
       <div>
         { loggedIn &&

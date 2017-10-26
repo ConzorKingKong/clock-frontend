@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import loop from '!!file-loader!../../assets/loop';
 import Titlebar from '../titlebar';
 import Clock from '../clock';
 import AlarmModal from '../alarmModal';
-import loop from '!!file-loader!../../assets/loop.js';
+import cleanNums from '../../helpers/cleanNums';
 import './index.styl';
 
 const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
@@ -19,7 +20,6 @@ export default class App extends Component {
       error: '',
       alarmTime: {}
     };
-    this.cleanNums = this.cleanNums.bind(this);
     this.setAppState = this.setAppState.bind(this);
     this.notificationListener = this.notificationListener.bind(this);
   }
@@ -58,8 +58,8 @@ export default class App extends Component {
           } = e.data.time;
           const {day} = e.data;
           const alarmTime = {...e.data.time, day: e.data.day};
-          if (window.Notification){
-            new Notification('Alarm Clock', {
+          if (window.Notification) {
+            new Notification('Alarm Clock', { // eslint-disable-line no-new
               body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`
             });
           }
@@ -92,12 +92,6 @@ export default class App extends Component {
   notificationListener() {
     if (this.state.loggedIn && (Notification.permission !== 'denied' || Notification.permission === 'default')) Notification.requestPermission();
   }
-  cleanNums(num) {
-    if (num.toString().length === 1) {
-      num = `0${num}`;
-    }
-    return num;
-  }
   render() {
     const {
       loggedIn,
@@ -108,8 +102,8 @@ export default class App extends Component {
       error
     } = this.state;
     let displayHours = date.getHours();
-    const displayMinutes = this.cleanNums(date.getMinutes());
-    const displaySeconds = this.cleanNums(date.getSeconds());
+    const displayMinutes = cleanNums(date.getMinutes());
+    const displaySeconds = cleanNums(date.getSeconds());
     let displayAmpm = 'AM';
     if (displayHours === 12) {
       displayAmpm = 'PM';
@@ -119,7 +113,7 @@ export default class App extends Component {
     } else if (displayHours === 24) {
       displayHours -= 12;
     }
-    displayHours = this.cleanNums(displayHours);
+    displayHours = cleanNums(displayHours);
     document.title = `Alarm Clock ${displayHours}:${displayMinutes}:${displaySeconds}${displayAmpm}`;
     return (
       <div className="wrapper">

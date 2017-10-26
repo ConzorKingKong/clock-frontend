@@ -17,6 +17,8 @@ export default class Titlebar extends Component {
     this.onButtonClick = this.onButtonClick.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
     this.setRegisterState = this.setRegisterState.bind(this);
+    this.setLoginRef = this.setLoginRef.bind(this);
+    this.setRegisterRef = this.setRegisterRef.bind(this);
   }
   onButtonClick(e) {
     const {state} = this;
@@ -31,16 +33,29 @@ export default class Titlebar extends Component {
   setRegisterState() {
     this.setState({register: false});
   }
+  setLoginRef(r) {
+    const {loginButton} = this.state;
+    if (!loginButton) this.setState({loginButton: r});
+  }
+  setRegisterRef(r) {
+    const {registerButton} = this.state;
+    if (!registerButton) this.setState({registerButton: r});
+  }
   render() {
-    const {login, register} = this.state;
-    const {loggedIn} = this.props;
+    const {
+      login,
+      register,
+      loginButton,
+      registerButton
+    } = this.state;
+    const {loggedIn, setAppState} = this.props;
     return (
       <div className="titlebar-wrapper">
         { !loggedIn &&
         <div className="button-wrapper">
           { !loggedIn &&
           <button
-            ref={r => {!this.state.loginButton && this.setState({loginButton: r});}}
+            ref={this.setLoginRef}
             className="login-button"
             name="login"
             onClick={this.onButtonClick}
@@ -50,8 +65,8 @@ export default class Titlebar extends Component {
           }
           { login &&
           <Login
-            reference={this.state.loginButton}
-            setAppState={this.props.setAppState}
+            reference={loginButton}
+            setAppState={setAppState}
             setLoginState={this.setLoginState}
           />
           }
@@ -60,7 +75,7 @@ export default class Titlebar extends Component {
         {!loggedIn &&
         <div className="button-wrapper">
           <button
-            ref={r => {!this.state.registerButton && this.setState({registerButton: r});}}
+            ref={this.setRegisterRef}
             className="register-button"
             name="register"
             onClick={this.onButtonClick}
@@ -69,14 +84,14 @@ export default class Titlebar extends Component {
           </button>
           { register &&
           <Register
-            reference={this.state.registerButton}
-            setAppState={this.props.setAppState}
+            reference={registerButton}
+            setAppState={setAppState}
             setRegisterState={this.setRegisterState}
           />
           }
         </div>
         }
-        { loggedIn && <Logout setAppState={this.props.setAppState} /> }
+        { loggedIn && <Logout setAppState={setAppState} /> }
       </div>
     );
   }
