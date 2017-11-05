@@ -5,12 +5,18 @@ before_script:
 
 stages:
   - build
+  - test
   - lint
 
 install_dependencies:
   stage: build
   script:
     - npm run build
+
+test_server:
+  stage: test
+  script:
+    - npm run test
 
 make_pretty:
   stage: lint
