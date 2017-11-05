@@ -1,5 +1,6 @@
 var request = require('supertest')
 var app = require('../app.js')
+var controllers = require('../controllers.js')
 
 describe('Test the root path', () => {
     test('It should response the GET method', () => {
@@ -14,6 +15,9 @@ describe('Test api', () => {
       .expect(200, {loggedIn: false, times: []})
       .expect('Content-Type', /json/)
       .end(function (err, res) {
+        if (controllers.conn !== undefined) {
+          controllers.conn.close()
+        }
         done()
       })
   })

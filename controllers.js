@@ -11,6 +11,7 @@ mongo.connect(MONGO_URL, function(err, conn) {
     return
   }
   users = conn.collection('users')
+  module.exports.conn = conn
 })
 
 module.exports.signup = function(req, res) {
