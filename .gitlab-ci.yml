@@ -1,5 +1,8 @@
 image: node
 
+before_script:
+  - npm install
+
 stages:
   - build
   - lint
@@ -7,7 +10,7 @@ stages:
 install_dependencies:
   stage: build
   script:
-    - npm install
+    - npm run build
 
 make_pretty:
   stage: lint
