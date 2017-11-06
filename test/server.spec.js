@@ -3,8 +3,13 @@ var app = require('../app.js')
 var controllers = require('../controllers.js')
 
 describe('Test the root path', () => {
-    test('It should response the GET method', () => {
-        return request(app).get('/').expect(200);
+    test('It should get a 200 response on the GET method', (done) => {
+        request(app)
+          .get('/')
+          .expect(200)
+          .end(function(err, res) {
+            done()
+          })
     });
 })
 
