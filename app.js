@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 })
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/public/', 'index.html'))
+  res.sendFile(path.join(__dirname, 'index.html'))
 })
 
 app.post('/api/signup', controllers.signup)
