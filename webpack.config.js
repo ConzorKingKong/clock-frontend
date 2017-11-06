@@ -39,7 +39,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: ath.join(__dirname, '/src/index.html')
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(process.env.API_URL)

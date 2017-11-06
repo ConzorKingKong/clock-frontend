@@ -8,7 +8,6 @@ describe('Test the root path', () => {
           .get('/')
           .expect(200)
           .end(function(err, res) {
-            console.log(res)
             done()
           })
     });
