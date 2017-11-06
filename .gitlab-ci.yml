@@ -10,7 +10,7 @@ install_dependencies:
   image: node  
   script:
     - npm install
-  cache:
+  artifacts:
     paths:
       - node_modules/
 
