@@ -31,3 +31,15 @@ build:
   image: node  
   script:
     - npm run build
+  artifacts:
+    paths:
+      - public/
+
+deploy_dev:
+  stage: deploy:dev
+  image: ruby
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=devconzorkingkongclock --api-key=$HEROKU_KEY
+  only:
+    - development

@@ -4,7 +4,8 @@
   "description": "learning react from the docs",
   "main": "./src/index.js",
   "scripts": {
-    "start": "npm run build && node server.js",
+    "start": "node server.js",
+    "dev": "npm run build && node server.js",
     "build": "webpack --progress --colors --optimize-minimize",
     "test": "jest ./test/server.spec.js",
     "lint": "eslint \"src/**/*.js\"",
