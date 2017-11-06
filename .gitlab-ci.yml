@@ -1,24 +1,32 @@
-image: node
-
-before_script:
-  - npm install
-
 stages:
-  - build
+  - install
   - test
-  - lint
+  - build
+  - deploy:dev
+  - deploy:prod
 
 install_dependencies:
-  stage: build
+  stage: install
+  image: node  
   script:
-    - npm run build
+    - npm install
+  cache:
+    - node_modules/
+
+make_pretty:
+  stage: test
+  image: node  
+  script:
+    - npm run lint
 
 test_server:
   stage: test
+  image: node  
   script:
     - npm run test
 
-make_pretty:
-  stage: lint
+build:
+  stage: build
+  image: node  
   script:
-    - npm run lint
+    - npm run build
