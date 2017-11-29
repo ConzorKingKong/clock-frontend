@@ -20,12 +20,6 @@ make_pretty:
   script:
     - npm run lint
 
-test_server:
-  stage: test
-  image: node  
-  script:
-    - npm run test
-
 build:
   stage: build
   image: node  
