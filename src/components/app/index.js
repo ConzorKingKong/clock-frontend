@@ -44,6 +44,10 @@ export default class App extends Component {
       'friday',
       'saturday'
     ];
+    const ampmKey = {
+      0: 'AM',
+      1: 'PM'
+    };
     if (window.Worker) {
       this.worker = new Worker(loop);
       this.worker.onmessage = e => {
@@ -60,7 +64,7 @@ export default class App extends Component {
           const alarmTime = {...e.data.time, day: e.data.day};
           if (window.Notification) {
             new Notification('Alarm Clock', { // eslint-disable-line no-new
-              body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampm} on ${dayKey[day]} went off`
+              body: `Your alarm for ${hours}:${minutes}:${seconds} ${ampmKey[ampm]} on ${dayKey[day]} went off`
             });
           }
           this.setState({
@@ -104,12 +108,12 @@ export default class App extends Component {
     let displayHours = date.getHours();
     const displayMinutes = cleanNums(date.getMinutes());
     const displaySeconds = cleanNums(date.getSeconds());
-    let displayAmpm = 'AM';
+    let displayAmpm = 0;
     if (displayHours === 12) {
-      displayAmpm = 'PM';
+      displayAmpm = 1;
     } else if (displayHours >= 13 && displayHours !== 24) {
       displayHours -= 12;
-      displayAmpm = 'PM';
+      displayAmpm = 1;
     } else if (displayHours === 24) {
       displayHours -= 12;
     }

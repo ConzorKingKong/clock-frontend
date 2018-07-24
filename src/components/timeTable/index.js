@@ -37,6 +37,10 @@ export default class TimeTable extends Component {
       5: 'Friday',
       6: 'Saturday'
     };
+    const ampmKey = {
+      0: 'AM',
+      1: 'PM'
+    };
     return this.props.times.map(time => {
       const {
         _id,
@@ -46,13 +50,12 @@ export default class TimeTable extends Component {
         ampm,
         days
       } = time;
-
       return (
         <div
           key={_id}
           className="time-table"
         >
-          <p>{hours}:{minutes}:{seconds} {ampm} {days.map(day => (`${dayKey[day]} `))}</p>
+          <p>{hours}:{minutes}:{seconds} {ampmKey[ampm]} {days.map(day => (`${dayKey[day]} `))}</p>
           <button
             id={_id}
             data-_id={_id}

@@ -12,7 +12,7 @@ export default class Logout extends Component {
     this.onButtonClick = this.onButtonClick.bind(this);
   }
   onButtonClick() {
-    axios.post(`${ROOT_URL}signout`)
+    axios.post(`${ROOT_URL}logout`)
       .then(() => {
         this.props.setAppState({loggedIn: false, times: []});
       })

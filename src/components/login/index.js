@@ -53,7 +53,7 @@ export default class Login extends Component {
     let {email} = this.state;
     const {setAppState} = this.props;
     email = email.toLowerCase();
-    axios.post(`${ROOT_URL}signin`, {email, password})
+    axios.post(`${ROOT_URL}login`, {email, password})
       .then(res => {
         const {loggedIn, times} = res.data;
         setAppState({

@@ -14,7 +14,7 @@ export default class Clock extends Component {
       hours: '01',
       minutes: '00',
       seconds: '00',
-      ampm: 'AM',
+      ampm: 0,
       days: []
     };
     this.onNumberChange = this.onNumberChange.bind(this);
@@ -34,7 +34,11 @@ export default class Clock extends Component {
   }
   onSelectChange(e) {
     const obj = {};
-    obj[e.target.name] = e.target.value;
+    if (e.target.name === 'ampm') {
+      obj[e.target.name] = parseInt(e.target.value, 10);
+    } else {
+      obj[e.target.name] = e.target.value;
+    }
     this.setState(obj);
   }
   onCheckChange(e) {
@@ -59,7 +63,7 @@ export default class Clock extends Component {
       hours: '01',
       minutes: '00',
       seconds: '00',
-      ampm: 'AM',
+      ampm: 0,
       days: []
     });
   }
@@ -98,6 +102,10 @@ export default class Clock extends Component {
       times
     } = this.props;
     const daysKey = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+    const ampmKey = {
+      0: 'AM',
+      1: 'PM'
+    };
     const day = date.getDay();
     const month = cleanNums(date.getMonth() + 1);
     const dateOfMonth = cleanNums(date.getDate());
@@ -105,12 +113,12 @@ export default class Clock extends Component {
     const clockMinutes = cleanNums(date.getMinutes());
     const clockSeconds = cleanNums(date.getSeconds());
     let clockHours = date.getHours();
-    let clockAmpm = 'AM';
+    let clockAmpm = 0;
     if (clockHours === 12) {
-      clockAmpm = 'PM';
+      clockAmpm = 1;
     } else if (clockHours >= 13 && clockHours !== 24) {
       clockHours -= 12;
-      clockAmpm = 'PM';
+      clockAmpm = 1;
     } else if (clockHours === 24) {
       clockHours -= 12;
     }
@@ -125,7 +133,7 @@ export default class Clock extends Component {
         /> }
         <div className="clock-display-time">
           <p>{daysKey[day]} {month}-{dateOfMonth}-{year}</p>
-          <p>{clockHours}:{clockMinutes}:{clockSeconds} {clockAmpm}</p>
+          <p>{clockHours}:{clockMinutes}:{clockSeconds} {ampmKey[clockAmpm]}</p>
         </div>
         { loggedIn &&
         <TimeForm

@@ -79,7 +79,7 @@ export default class Register extends Component {
       this.setState({error: '', errorPassword: 'Passwords do not match'});
       return;
     }
-    axios.post(`${ROOT_URL}signup`, {email: email.toLowerCase(), username: username.toLowerCase(), password}, {headers: {'Content-Type': 'application/json'}})
+    axios.post(`${ROOT_URL}newuser`, {email: email.toLowerCase(), username: username.toLowerCase(), password}, {headers: {'Content-Type': 'application/json'}})
       .then(res => {
         const {data} = res;
         this.props.setAppState({loggedIn: data.loggedIn, times: data.times});

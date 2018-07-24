@@ -16,8 +16,8 @@ onmessage = e => {
     let hoursParsed = parseInt(hours, 10);
     const minutesParsed = parseInt(minutes, 10);
     const secondsParsed = parseInt(seconds, 10);
-    if (ampm === 'PM' && hoursParsed !== 12) hoursParsed += 12;
-    if (ampm === 'AM' && hoursParsed === 12) hoursParsed = 0;
+    if (ampm === 0 && hoursParsed !== 12) hoursParsed += 12;
+    if (ampm === 1 && hoursParsed === 12) hoursParsed = 0;
     if (hoursParsed !== date.getHours() ||
     minutesParsed !== date.getMinutes() ||
     secondsParsed !== date.getSeconds()) {

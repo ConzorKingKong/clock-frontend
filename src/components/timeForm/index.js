@@ -43,12 +43,12 @@ export default class TimeForm extends Component {
       this.setState({error: 'Cannot have impossible times'});
       return;
     }
-    axios.post(`${ROOT_URL}addtime`, {
+    axios.post(`${ROOT_URL}newtime`, {
       _id,
-      hours,
-      minutes,
-      seconds,
-      ampm,
+      hours: parseInt(hours, 10),
+      minutes: parseInt(minutes, 10),
+      seconds: parseInt(seconds, 10),
+      ampm: parseInt(ampm, 10),
       days
     })
       .then(res => {
@@ -61,7 +61,7 @@ export default class TimeForm extends Component {
           hours: '01',
           minutes: '00',
           seconds: '00',
-          ampm: 'AM',
+          ampm: 0,
           days: []
         });
         this.setState({error: ''});
@@ -131,8 +131,8 @@ export default class TimeForm extends Component {
             />
           </div>
           <select name="ampm" value={ampm} onChange={onSelectChange} >
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
+            <option value="0">AM</option>
+            <option value="1">PM</option>
           </select>
         </div>
         <fieldset className="form-fieldset">
@@ -218,7 +218,7 @@ TimeForm.propTypes = {
   hours: PropTypes.string.isRequired,
   minutes: PropTypes.string.isRequired,
   seconds: PropTypes.string.isRequired,
-  ampm: PropTypes.string.isRequired,
+  ampm: PropTypes.number.isRequired,
   days: PropTypes.arrayOf(PropTypes.number).isRequired,
   setAppState: PropTypes.func.isRequired,
   setClockState: PropTypes.func.isRequired,

@@ -34,6 +34,10 @@ export default class AlarmModal extends Component {
       'friday',
       'saturday'
     ];
+    const ampmKey = {
+      0: 'AM',
+      1: 'PM'
+    };
     const {
       hours,
       minutes,
@@ -44,7 +48,7 @@ export default class AlarmModal extends Component {
     return (
       <div ref={r => {this.modal = r;}} className="alarm-modal">
         <audio src={gong} autoPlay loop />
-        <h4>Your alarm for {hours}:{minutes}:{seconds} {ampm} on {dayKey[day]} went off</h4>
+        <h4>Your alarm for {hours}:{minutes}:{seconds} {ampmKey[ampm]} on {dayKey[day]} went off</h4>
         <button ref={r => {this.stopButton = r;}} onClick={this.onButtonClick}>■</button>
       </div>
     );
@@ -56,7 +60,7 @@ AlarmModal.propTypes = {
     hours: PropTypes.string.isRequired,
     minutes: PropTypes.string.isRequired,
     seconds: PropTypes.string.isRequired,
-    ampm: PropTypes.string.isRequired,
+    ampm: PropTypes.number.isRequired,
     day: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,
   setAppState: PropTypes.func.isRequired
