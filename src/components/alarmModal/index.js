@@ -57,9 +57,9 @@ export default class AlarmModal extends Component {
 
 AlarmModal.propTypes = {
   alarmTime: PropTypes.shape({
-    hours: PropTypes.string.isRequired,
-    minutes: PropTypes.string.isRequired,
-    seconds: PropTypes.string.isRequired,
+    hours: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired,
     ampm: PropTypes.number.isRequired,
     day: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,

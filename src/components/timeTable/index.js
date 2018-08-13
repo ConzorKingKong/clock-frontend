@@ -17,7 +17,7 @@ export default class TimeTable extends Component {
     const {id} = e.target;
     axios.post(`${ROOT_URL}deletetime`, {id})
       .then(res => {
-        const {times} = res.data.value;
+        const times = res.data;
         this.props.setAppState({
           times
         });
@@ -43,22 +43,30 @@ export default class TimeTable extends Component {
     };
     return this.props.times.map(time => {
       const {
-        _id,
-        hours,
-        minutes,
-        seconds,
+        id,
         ampm,
         days
       } = time;
+      let {
+        hours,
+        minutes,
+        seconds
+      } = time;
+      hours = hours.toString();
+      minutes = minutes.toString();
+      seconds = seconds.toString();
+      if (hours.length === 1) hours = `0${hours}`;
+      if (minutes.length === 1) minutes = `0${minutes}`;
+      if (seconds.length === 1) seconds = `0${seconds}`;
       return (
         <div
-          key={_id}
+          key={id}
           className="time-table"
         >
           <p>{hours}:{minutes}:{seconds} {ampmKey[ampm]} {days.map(day => (`${dayKey[day]} `))}</p>
           <button
-            id={_id}
-            data-_id={_id}
+            id={id}
+            data-id={id}
             data-hours={hours}
             data-minutes={minutes}
             data-seconds={seconds}
@@ -69,7 +77,7 @@ export default class TimeTable extends Component {
             Edit
           </button>
           <button
-            id={_id}
+            id={id}
             onClick={this.deleteTime}
           >
             Delete

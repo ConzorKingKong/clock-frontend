@@ -7,20 +7,17 @@ onmessage = e => {
   }
   times.forEach(time => {
     const {
-      hours,
       minutes,
       seconds,
       days,
       ampm
     } = time;
-    let hoursParsed = parseInt(hours, 10);
-    const minutesParsed = parseInt(minutes, 10);
-    const secondsParsed = parseInt(seconds, 10);
-    if (ampm === 0 && hoursParsed !== 12) hoursParsed += 12;
-    if (ampm === 1 && hoursParsed === 12) hoursParsed = 0;
-    if (hoursParsed !== date.getHours() ||
-    minutesParsed !== date.getMinutes() ||
-    secondsParsed !== date.getSeconds()) {
+    let {hours} = time;
+    if (ampm === 1 && hours !== 12) hours += 12;
+    if (ampm === 0 && hours === 12) hours = 0;
+    if (hours !== date.getHours() ||
+    minutes !== date.getMinutes() ||
+    seconds !== date.getSeconds()) {
       postMessage({date});
       return;
     }

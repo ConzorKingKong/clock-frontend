@@ -19,7 +19,7 @@ export default class TimeForm extends Component {
 
   onFormSubmit(e) {
     e.preventDefault();
-    const {_id, ampm, days} = this.props;
+    const {id, ampm, days} = this.props;
     let {hours, minutes, seconds} = this.props;
     if (days.length === 0) {
       this.setState({error: 'You must select at least one day'});
@@ -44,7 +44,7 @@ export default class TimeForm extends Component {
       return;
     }
     axios.post(`${ROOT_URL}newtime`, {
-      _id,
+      id,
       hours: parseInt(hours, 10),
       minutes: parseInt(minutes, 10),
       seconds: parseInt(seconds, 10),
@@ -57,10 +57,10 @@ export default class TimeForm extends Component {
           times: data
         });
         this.props.setClockState({
-          _id: '',
-          hours: '01',
-          minutes: '00',
-          seconds: '00',
+          id: '',
+          hours: 1,
+          minutes: 0,
+          seconds: 0,
           ampm: 0,
           days: []
         });
@@ -81,7 +81,7 @@ export default class TimeForm extends Component {
     const {
       ampm,
       days,
-      _id,
+      id,
       onNumberChange,
       onSelectChange,
       onCheckChange
@@ -94,7 +94,7 @@ export default class TimeForm extends Component {
     return (
       <form className="time-form" onSubmit={this.onFormSubmit}>
         <p>{error}</p>
-        { _id !== '' &&
+        { id !== '' &&
         <button onClick={this.onButtonPress}>Cancel</button> }
         <div className="time-form-inputs">
           <div>
@@ -214,7 +214,7 @@ export default class TimeForm extends Component {
 }
 
 TimeForm.propTypes = {
-  _id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   hours: PropTypes.string.isRequired,
   minutes: PropTypes.string.isRequired,
   seconds: PropTypes.string.isRequired,

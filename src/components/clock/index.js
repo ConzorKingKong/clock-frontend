@@ -10,10 +10,10 @@ export default class Clock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: '',
-      hours: '01',
-      minutes: '00',
-      seconds: '00',
+      id: '',
+      hours: 1,
+      minutes: 0,
+      seconds: 0,
       ampm: 0,
       days: []
     };
@@ -59,17 +59,17 @@ export default class Clock extends Component {
   }
   formClear() {
     this.setState({
-      _id: '',
-      hours: '01',
-      minutes: '00',
-      seconds: '00',
+      id: '',
+      hours: 1,
+      minutes: 0,
+      seconds: 0,
       ampm: 0,
       days: []
     });
   }
   editTime(e) {
     const {
-      _id,
+      id,
       hours,
       minutes,
       seconds,
@@ -78,7 +78,7 @@ export default class Clock extends Component {
     } = e.target.dataset;
     const newDays = days.split(',').map(day => (parseInt(day, 10)));
     this.setState({
-      _id,
+      id,
       hours,
       minutes,
       seconds,
@@ -88,7 +88,7 @@ export default class Clock extends Component {
   }
   render() {
     const {
-      _id,
+      id,
       hours,
       minutes,
       seconds,
@@ -143,7 +143,7 @@ export default class Clock extends Component {
           onSelectChange={this.onSelectChange}
           onNumberChange={this.onNumberChange}
           formClear={this.formClear}
-          _id={_id}
+          id={id}
           hours={hours}
           minutes={minutes}
           seconds={seconds}
