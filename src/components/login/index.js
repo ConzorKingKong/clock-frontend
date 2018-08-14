@@ -43,7 +43,7 @@ export default class Login extends Component {
     const obj = {};
     obj[`error${capitalize(name)}`] = '';
     if (name === 'email') {
-      if (!emailRegex.test(value) && value !== '') obj[`error${capitalize(name)}`] = 'Email is not valid';
+      if (!emailRegex.test(value) && value.includes('@')) obj[`error${capitalize(name)}`] = 'Email is not valid';
     }
     this.setState(obj);
   }
@@ -102,8 +102,9 @@ export default class Login extends Component {
           onBlur={this.onInputBlur}
           value={email}
           type="text"
-          placeholder="Email"
+          placeholder="Email or Username"
           name="email"
+          autoComplete="section-yellow current-email"
         />
         <input
           onChange={this.onInputChange}
@@ -111,6 +112,7 @@ export default class Login extends Component {
           type="password"
           placeholder="Password"
           name="password"
+          autoComplete="section-yellow current-password"
         />
         <button type="submit">Submit</button>
       </form>

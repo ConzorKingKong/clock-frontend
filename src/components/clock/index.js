@@ -69,21 +69,28 @@ export default class Clock extends Component {
   }
   editTime(e) {
     const {
-      id,
+      id
+    } = e.target.dataset;
+    let {
       hours,
       minutes,
       seconds,
       ampm,
       days
     } = e.target.dataset;
-    const newDays = days.split(',').map(day => (parseInt(day, 10)));
+    // Convert to numbers to match prop type
+    hours = parseInt(hours, 10);
+    minutes = parseInt(minutes, 10);
+    seconds = parseInt(seconds, 10);
+    ampm = parseInt(ampm, 10);
+    days = days.split(',').map(day => (parseInt(day, 10)));
     this.setState({
       id,
       hours,
       minutes,
       seconds,
       ampm,
-      days: newDays
+      days
     });
   }
   render() {
@@ -121,6 +128,8 @@ export default class Clock extends Component {
       clockAmpm = 1;
     } else if (clockHours === 24) {
       clockHours -= 12;
+    } else if (clockHours === 0) {
+      clockHours += 12;
     }
     clockHours = cleanNums(clockHours);
     return (

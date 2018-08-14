@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './index.styl';
+import cleanNums from '../../helpers/cleanNums';
 
 const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
 
@@ -44,26 +45,21 @@ export default class TimeTable extends Component {
     return this.props.times.map(time => {
       const {
         id,
+        hours,
+        minutes,
+        seconds,
         ampm,
         days
       } = time;
-      let {
-        hours,
-        minutes,
-        seconds
-      } = time;
-      hours = hours.toString();
-      minutes = minutes.toString();
-      seconds = seconds.toString();
-      if (hours.length === 1) hours = `0${hours}`;
-      if (minutes.length === 1) minutes = `0${minutes}`;
-      if (seconds.length === 1) seconds = `0${seconds}`;
+      const displayHours = cleanNums(hours);
+      const displayMinutes = cleanNums(minutes);
+      const displaySeconds = cleanNums(seconds);
       return (
         <div
           key={id}
           className="time-table"
         >
-          <p>{hours}:{minutes}:{seconds} {ampmKey[ampm]} {days.map(day => (`${dayKey[day]} `))}</p>
+          <p>{displayHours}:{displayMinutes}:{displaySeconds} {ampmKey[ampm]} {days.map(day => (`${dayKey[day]} `))}</p>
           <button
             id={id}
             data-id={id}

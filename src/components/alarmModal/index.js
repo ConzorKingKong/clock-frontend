@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import gong from '../../assets/gong.mp3';
+import cleanNums from '../../helpers/cleanNums';
 import './index.styl';
 
 export default class AlarmModal extends Component {
@@ -45,10 +46,13 @@ export default class AlarmModal extends Component {
       ampm,
       day
     } = this.props.alarmTime;
+    const displayHours = cleanNums(hours);
+    const displayMinutes = cleanNums(minutes);
+    const displaySeconds = cleanNums(seconds);
     return (
       <div ref={r => {this.modal = r;}} className="alarm-modal">
         <audio src={gong} autoPlay loop />
-        <h4>Your alarm for {hours}:{minutes}:{seconds} {ampmKey[ampm]} on {dayKey[day]} went off</h4>
+        <h4>Your alarm for {displayHours}:{displayMinutes}:{displaySeconds} {ampmKey[ampm]} on {dayKey[day]} went off</h4>
         <button ref={r => {this.stopButton = r;}} onClick={this.onButtonClick}>■</button>
       </div>
     );

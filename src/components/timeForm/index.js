@@ -215,9 +215,9 @@ export default class TimeForm extends Component {
 
 TimeForm.propTypes = {
   id: PropTypes.string.isRequired,
-  hours: PropTypes.string.isRequired,
-  minutes: PropTypes.string.isRequired,
-  seconds: PropTypes.string.isRequired,
+  hours: PropTypes.number.isRequired,
+  minutes: PropTypes.number.isRequired,
+  seconds: PropTypes.number.isRequired,
   ampm: PropTypes.number.isRequired,
   days: PropTypes.arrayOf(PropTypes.number).isRequired,
   setAppState: PropTypes.func.isRequired,

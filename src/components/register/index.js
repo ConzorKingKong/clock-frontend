@@ -140,6 +140,7 @@ export default class Register extends Component {
           type="text"
           placeholder="Email"
           name="email"
+          autoComplete="section-green new-email"
         />
         <input
           onBlur={this.onInputBlur}
@@ -156,6 +157,7 @@ export default class Register extends Component {
           type="password"
           placeholder="Password"
           name="password"
+          autoComplete="section-green new-password"
         />
         <input
           onBlur={this.onInputBlur}
@@ -164,6 +166,7 @@ export default class Register extends Component {
           type="password"
           placeholder="Verify Password"
           name="verifyPassword"
+          autoComplete="section-green new-password"
         />
         <button type="submit">Submit</button>
       </form>
