@@ -43,6 +43,37 @@ export default class TimeForm extends Component {
       this.setState({error: 'Cannot have impossible times'});
       return;
     }
+    if (id !== '') {
+      axios.post(`${ROOT_URL}edittime`, {
+        id,
+        hours: parseInt(hours, 10),
+        minutes: parseInt(minutes, 10),
+        seconds: parseInt(seconds, 10),
+        ampm: parseInt(ampm, 10),
+        days
+      })
+        .then(res => {
+          const {data} = res;
+          this.props.setAppState({
+            times: data
+          });
+          this.props.setClockState({
+            id: '',
+            hours: 1,
+            minutes: 0,
+            seconds: 0,
+            ampm: 0,
+            days: []
+          });
+          this.setState({error: ''});
+        })
+        .catch(err => {
+          const {error, loggedIn} = err.response.data;
+          this.setState({error});
+          this.props.setAppState({loggedIn});
+        });
+      return;
+    }
     axios.post(`${ROOT_URL}newtime`, {
       id,
       hours: parseInt(hours, 10),
