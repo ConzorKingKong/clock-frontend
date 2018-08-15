@@ -79,10 +79,10 @@ export default class Register extends Component {
       this.setState({error: '', errorPassword: 'Passwords do not match'});
       return;
     }
-    axios.post(`${ROOT_URL}newuser`, {email: email.toLowerCase(), username: username.toLowerCase(), password}, {headers: {'Content-Type': 'application/json'}})
+    axios.post(`${ROOT_URL}newuser`, {email: email.toLowerCase(), username, password}, {headers: {'Content-Type': 'application/json'}})
       .then(res => {
         const {data} = res;
-        this.props.setAppState({loggedIn: data.loggedIn, times: data.times});
+        this.props.setAppState({loggedIn: data.loggedIn, username: data.username, times: data.times});
         this.setState({
           email: '',
           username: '',
@@ -136,6 +136,8 @@ export default class Register extends Component {
           type="text"
           placeholder="Email"
           name="email"
+          minLength="5"
+          maxLength="254"
           autoComplete="section-green new-email"
         />
         <input
@@ -145,6 +147,7 @@ export default class Register extends Component {
           type="text"
           placeholder="Username"
           name="username"
+          minLength="1"
           maxLength="20"
         />
         <input
@@ -155,6 +158,7 @@ export default class Register extends Component {
           placeholder="Password"
           name="password"
           minLength="8"
+          maxLength="40"
           autoComplete="section-green new-password"
         />
         <input
@@ -165,6 +169,7 @@ export default class Register extends Component {
           placeholder="Verify Password"
           name="verifyPassword"
           minLength="8"
+          maxLength="40"
           autoComplete="section-green new-password"
         />
         <button type="submit">Submit</button>

@@ -60,9 +60,10 @@ export default class Login extends Component {
     login = login.toLowerCase();
     axios.post(`${ROOT_URL}login`, {login, password})
       .then(res => {
-        const {loggedIn, times} = res.data;
+        const {loggedIn, times, username} = res.data;
         setAppState({
           loggedIn,
+          username,
           times
         });
         this.setState({
@@ -109,7 +110,8 @@ export default class Login extends Component {
           type="text"
           placeholder="Email or Username"
           name="login"
-          maxLength="113"
+          minLength="1"
+          maxLength="254"
           autoComplete="section-yellow current-email"
         />
         <input
@@ -119,6 +121,7 @@ export default class Login extends Component {
           placeholder="Password"
           name="password"
           minLength="8"
+          maxLength="40"
           autoComplete="section-yellow current-password"
         />
         <button type="submit">Submit</button>

@@ -14,6 +14,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
+      username: '',
       times: [],
       date: new Date(),
       alarm: false,
@@ -26,9 +27,10 @@ export default class App extends Component {
   componentWillMount() {
     axios.get(`${ROOT_URL}loginstatus`)
       .then(res => {
-        const {loggedIn, times} = res.data;
+        const {loggedIn, times, username} = res.data;
         this.setState({
           times,
+          username,
           loggedIn
         });
       })
@@ -99,6 +101,7 @@ export default class App extends Component {
   render() {
     const {
       loggedIn,
+      username,
       times,
       date,
       alarm,
@@ -124,6 +127,7 @@ export default class App extends Component {
         <Titlebar
           setAppState={this.setAppState}
           loggedIn={loggedIn}
+          username={username}
         />
         <h1>{error}</h1>
         <Clock
