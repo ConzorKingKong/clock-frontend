@@ -97,10 +97,6 @@ export default class Register extends Component {
       .catch(err => {
         const {data} = err.response;
         this.setState({
-          email: '',
-          username: '',
-          password: '',
-          verifyPassword: '',
           errorEmail: '',
           errorUsername: '',
           errorPassword: '',
@@ -149,6 +145,7 @@ export default class Register extends Component {
           type="text"
           placeholder="Username"
           name="username"
+          maxLength="20"
         />
         <input
           onBlur={this.onInputBlur}
@@ -157,6 +154,7 @@ export default class Register extends Component {
           type="password"
           placeholder="Password"
           name="password"
+          minLength="8"
           autoComplete="section-green new-password"
         />
         <input
@@ -166,6 +164,7 @@ export default class Register extends Component {
           type="password"
           placeholder="Verify Password"
           name="verifyPassword"
+          minLength="8"
           autoComplete="section-green new-password"
         />
         <button type="submit">Submit</button>

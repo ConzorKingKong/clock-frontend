@@ -8,10 +8,10 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      login: '',
       password: '',
       error: '',
-      errorEmail: ''
+      errorLogin: ''
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
@@ -42,18 +42,23 @@ export default class Login extends Component {
     const emailRegex = /\S+@\S+\.\S+/;
     const obj = {};
     obj[`error${capitalize(name)}`] = '';
-    if (name === 'email') {
-      if (!emailRegex.test(value) && value.includes('@')) obj[`error${capitalize(name)}`] = 'Email is not valid';
+    if (name === 'login') {
+      if (!emailRegex.test(value) && value.includes('@')) obj[`error${capitalize(name)}`] = 'Login must be either valid email or username without an @ symbol';
     }
     this.setState(obj);
   }
   onFormSubmit(e) {
     e.preventDefault();
+    const emailRegex = /\S+@\S+\.\S+/;
+    let {login} = this.state;
+    if (!emailRegex.test(login) && login.includes('@')) {
+      this.setState({errorLogin: 'Login must be either valid email or username without an @ symbol'});
+      return;
+    }
     const {password} = this.state;
-    let {email} = this.state;
     const {setAppState} = this.props;
-    email = email.toLowerCase();
-    axios.post(`${ROOT_URL}login`, {email, password})
+    login = login.toLowerCase();
+    axios.post(`${ROOT_URL}login`, {login, password})
       .then(res => {
         const {loggedIn, times} = res.data;
         setAppState({
@@ -61,19 +66,19 @@ export default class Login extends Component {
           times
         });
         this.setState({
-          email: '',
+          login: '',
           password: '',
           error: '',
-          errorEmail: ''
+          errorLogin: ''
         });
       })
       .catch(err => {
         const {data} = err.response;
         setAppState({loggedIn: data.loggedIn});
         this.setState({
-          email: '',
+          login: '',
           password: '',
-          errorEmail: '',
+          errorLogin: '',
           error: data.error
         });
       });
@@ -84,10 +89,10 @@ export default class Login extends Component {
   }
   render() {
     const {
-      email,
+      login,
       password,
       error,
-      errorEmail
+      errorLogin
     } = this.state;
     return (
       <form
@@ -95,15 +100,16 @@ export default class Login extends Component {
         onSubmit={this.onFormSubmit}
       >
         <p>{error}</p>
-        <p>{errorEmail}</p>
+        <p>{errorLogin}</p>
         <h3>Login</h3>
         <input
           onChange={this.onInputChange}
           onBlur={this.onInputBlur}
-          value={email}
+          value={login}
           type="text"
           placeholder="Email or Username"
-          name="email"
+          name="login"
+          maxLength="113"
           autoComplete="section-yellow current-email"
         />
         <input
@@ -112,6 +118,7 @@ export default class Login extends Component {
           type="password"
           placeholder="Password"
           name="password"
+          minLength="8"
           autoComplete="section-yellow current-password"
         />
         <button type="submit">Submit</button>
