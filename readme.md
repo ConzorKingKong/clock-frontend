@@ -4,5 +4,3 @@ This is an alarm clock application that allows visitors to sign up and save alar
 
 #### Needed env variables
 `API_URL`
-`MONGODB_URI`
-`SECRET`
