@@ -29,20 +29,20 @@ build:
     paths:
       - public/
 
-deploy_dev:
-  stage: deploy:dev
-  image: ruby
-  script:
-    - gem install dpl
-    - dpl --provider=heroku --app=devconzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
-  only:
-    - development
+# deploy_dev:
+#   stage: deploy:dev
+#   image: ruby
+#   script:
+#     - gem install dpl
+#     - dpl --provider=heroku --app=devconzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
+#   only:
+#     - development
 
-deploy_prod:
-  stage: deploy:prod
-  image: ruby
-  script:
-    - gem install dpl
-    - dpl --provider=heroku --app=conzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
-  only:
-    - master
+# deploy_prod:
+#   stage: deploy:prod
+#   image: ruby
+#   script:
+#     - gem install dpl
+#     - dpl --provider=heroku --app=conzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
+#   only:
+#     - master
