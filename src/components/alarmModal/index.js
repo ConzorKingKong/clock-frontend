@@ -52,7 +52,10 @@ export default class AlarmModal extends Component {
     return (
       <div ref={r => {this.modal = r;}} className="alarm-modal">
         <audio src={gong} autoPlay loop />
-        <h4>Your alarm for {displayHours}:{displayMinutes}:{displaySeconds} {ampmKey[ampm]} on {dayKey[day]} went off</h4>
+        <h4>
+          Your alarm for {displayHours}:{displayMinutes}:{displaySeconds} {ampmKey[ampm]}
+           on {dayKey[day]} went off
+        </h4>
         <button ref={r => {this.stopButton = r;}} onClick={this.onButtonClick}>■</button>
       </div>
     );
