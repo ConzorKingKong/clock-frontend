@@ -12,6 +12,6 @@ services:
     expose:
       - "3000"
   backend:
-    image: clockback
+    image: registry.gitlab.com/conzorkingkong/clock-backend
     expose:
       - "3000"
