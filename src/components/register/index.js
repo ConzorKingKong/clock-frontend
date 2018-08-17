@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
-const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
+import ROOT_URL from '../../helpers/ROOT_URL';
 
 export default class Register extends Component {
   constructor(props) {

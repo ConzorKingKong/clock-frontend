@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import './index.styl';
 import cleanNums from '../../helpers/cleanNums';
-
-const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
+import ROOT_URL from '../../helpers/ROOT_URL';
+import './index.styl';
 
 export default class TimeTable extends Component {
   constructor(props) {

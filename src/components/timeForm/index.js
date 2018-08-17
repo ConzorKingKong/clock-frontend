@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import ROOT_URL from '../../helpers/ROOT_URL';
 import './index.styl';
-
-const ROOT_URL = API_URL || 'http://localhost:3000/api/'; // eslint-disable-line no-undef
 
 export default class TimeForm extends Component {
   constructor(props) {
