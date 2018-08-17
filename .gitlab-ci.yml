@@ -37,23 +37,14 @@ register_container_prod:
     - docker:dind
   script:
     - docker login -u conzorkingkong -p $PASSWORD registry.gitlab.com
-    - docker build -t registry.gitlab.com/conzorkingkong/clock .
+    - docker build -t --build-arg API_URL=$API_URL registry.gitlab.com/conzorkingkong/clock .
     - docker push registry.gitlab.com/conzorkingkong/clock:latest
 
-# deploy_dev:
-#   stage: deploy:dev
-#   image: ruby
-#   script:
-#     - gem install dpl
-#     - dpl --provider=heroku --app=devconzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
-#   only:
-#     - development
-
-# deploy_prod:
-#   stage: deploy:prod
-#   image: ruby
-#   script:
-#     - gem install dpl
-#     - dpl --provider=heroku --app=conzorkingkongclock --api-key=$HEROKU_KEY --skip-cleanup
-#   only:
-#     - master
+deploy_prod:
+  stage: deploy:prod
+  image: debian
+  script:
+    - apt-get update && apt-get install -y openssh-server
+    - ssh connor:$PASSWORD@ssh.igotthe.info:/home/connor
+  only:
+    - master
