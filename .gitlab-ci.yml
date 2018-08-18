@@ -2,7 +2,9 @@ stages:
   - install
   - test
   - build
+  - register:dev
   - register:prod
+  - register:dev
   - deploy:prod
 
 install_dependencies:
@@ -29,8 +31,22 @@ build:
     paths:
       - public/
 
+register_container_dev:
+  stage: register:dev
+  only:
+    - development
+  image: docker:git
+  services:
+    - docker:dind
+  script:
+    - docker login -u conzorkingkong -p $PASSWORD registry.gitlab.com
+    - docker build --build-arg API_URL=$API_URL -t registry.gitlab.com/conzorkingkong/clock .
+    - docker push registry.gitlab.com/conzorkingkong/clock/dev:latest
+
 register_container_prod:
   stage: register:prod
+  only:
+    - master
   image: docker:git
   services:
     - docker:dind
@@ -39,8 +55,19 @@ register_container_prod:
     - docker build --build-arg API_URL=$API_URL -t registry.gitlab.com/conzorkingkong/clock .
     - docker push registry.gitlab.com/conzorkingkong/clock:latest
 
+deploy_container_dev:
+  stage: deploy:dev
+  only:
+    - development
+  image: debian
+  script:
+    - apt-get update && apt-get install curl
+    - curl https://devclock.connorpeshek.me/updatefront
+
 deploy_container_prod:
   stage: deploy:prod
+  only:
+    - master
   image: debian
   script:
     - apt-get update && apt-get install curl
