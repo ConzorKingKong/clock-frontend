@@ -1,6 +1,8 @@
 # Alarm Clock
 
-This is an alarm clock application that allows visitors to sign up and save alarm times. It is a NERD Stack (Node, Express, React, MongoDB) application.
+This is the backend for an alarm clock application that allows visitors to sign up and save alarm times.
+
+The backend is written in Go, the frontend is React.
 
 #### Needed env variables
 `API_URL`
