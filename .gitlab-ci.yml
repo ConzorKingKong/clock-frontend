@@ -40,7 +40,7 @@ register_container_dev:
     - docker:dind
   script:
     - docker login -u conzorkingkong -p $PASSWORD registry.gitlab.com
-    - docker build --build-arg API_URL=$API_URL -t registry.gitlab.com/conzorkingkong/clock .
+    - docker build --build-arg API_URL=$API_URL -t registry.gitlab.com/conzorkingkong/clock/dev .
     - docker push registry.gitlab.com/conzorkingkong/clock/dev:latest
 
 register_container_prod:
