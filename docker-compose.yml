@@ -12,6 +12,13 @@ services:
     expose:
       - "3000"
   backend:
+    depends_on:
+      - mongo
     image: registry.gitlab.com/conzorkingkong/clock-backend
     expose:
       - "3000"
+  mongo:
+    container_name: mongo
+    image: mongo:3.5
+    ports:
+      - '27017:27017'
