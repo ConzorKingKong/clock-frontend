@@ -9,7 +9,7 @@ stages:
 
 install_dependencies:
   stage: install
-  image: node  
+  image: node:10.5
   script:
     - npm install
   artifacts:
@@ -18,13 +18,13 @@ install_dependencies:
 
 make_pretty:
   stage: test
-  image: node  
+  image: node:10.5
   script:
     - npm run lint
 
 build:
   stage: build
-  image: node  
+  image: node:10.5
   script:
     - npm run build
   artifacts:
