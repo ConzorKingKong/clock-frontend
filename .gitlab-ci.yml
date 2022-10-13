@@ -4,7 +4,7 @@ stages:
   - build
   - register:dev
   - register:prod
-  - depoy:dev
+  - deploy:dev
   - deploy:prod
 
 install_dependencies:
