@@ -174,7 +174,7 @@ export default class TimeForm extends Component {
               value="0"
               checked={days.includes(0) && true}
             />
-          Sunday
+            Sunday
           </label>
           <label htmlFor="monday">
             <input

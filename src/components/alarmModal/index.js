@@ -54,7 +54,7 @@ export default class AlarmModal extends Component {
         <audio src={gong} autoPlay loop />
         <h4>
           Your alarm for {displayHours}:{displayMinutes}:{displaySeconds} {ampmKey[ampm]}
-           on {dayKey[day]} went off
+          on {dayKey[day]} went off
         </h4>
         <button ref={r => {this.stopButton = r;}} onClick={this.onButtonClick}>■</button>
       </div>
