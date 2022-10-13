@@ -61,7 +61,7 @@ deploy_container_dev:
     - development
   image: debian
   script:
-    - apt-get update && apt-get install curl
+    - apt-get update && apt-get install -y curl
     - curl https://devclock.connorpeshek.me/updatefront
 
 deploy_container_prod:
@@ -70,5 +70,5 @@ deploy_container_prod:
     - master
   image: debian
   script:
-    - apt-get update && apt-get install curl
+    - apt-get update && apt-get install -y curl
     - curl https://clock.connorpeshek.me/updatefront
