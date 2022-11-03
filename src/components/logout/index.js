@@ -23,8 +23,8 @@ export default class Logout extends Component {
   render() {
     const {username} = this.props;
     return (
-      <div>
-        <div>Welcome {username} </div>
+      <div className="logout-wrapper">
+        <p>Welcome {username} </p>
         <button
           className="logout-button"
           onClick={this.onButtonClick}
