@@ -123,5 +123,5 @@ export default class Login extends Component {
 
 Login.propTypes = {
   setLoginState: PropTypes.func.isRequired,
-  setAppState: PropTypes.func.isRequired,
+  setAppState: PropTypes.func.isRequired
 };

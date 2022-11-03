@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Login from '../login';
-import Register from '../register';
 import Logout from '../logout';
 import './index.styl';
 
@@ -9,31 +7,20 @@ export default class Titlebar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      login: false,
-      register: false
-    };
-
     this.onButtonClick = this.onButtonClick.bind(this);
   }
   onButtonClick(e) {
-    const newState = {showLoginModal: true}
-    if (e.target.name === "login") {
-      newState.loginActive = true
-      newState.registerActive = false
+    const newState = {showLoginModal: true};
+    if (e.target.name === 'login') {
+      newState.loginActive = true;
+      newState.registerActive = false;
     } else {
-      newState.loginActive = false
-      newState.registerActive = true
+      newState.loginActive = false;
+      newState.registerActive = true;
     }
-    this.props.setAppState(newState)
+    this.props.setAppState(newState);
   }
   render() {
-    const {
-      login,
-      register,
-      loginButton,
-      registerButton
-    } = this.state;
     const {loggedIn, setAppState, username} = this.props;
     return (
       <div className="titlebar-wrapper">

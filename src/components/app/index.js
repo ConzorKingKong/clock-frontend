@@ -4,7 +4,7 @@ import loop from '!!file-loader!../../assets/loop';
 import Titlebar from '../titlebar';
 import Clock from '../clock';
 import AlarmModal from '../alarmModal';
-import LoginModal from '../loginModal'
+import LoginModal from '../loginModal';
 import cleanNums from '../../helpers/cleanNums';
 import ROOT_URL from '../../helpers/ROOT_URL';
 import './index.styl';
@@ -147,12 +147,12 @@ export default class App extends Component {
           setAppState={this.setAppState}
           alarmTime={alarmTime}
         /> }
-        { showLoginModal && <LoginModal 
-        setAppState={this.setAppState}
-        loggedIn={loggedIn}
-        username={username}
-        loginActive={loginActive}
-        registerActive={registerActive}
+        { showLoginModal && <LoginModal
+          setAppState={this.setAppState}
+          loggedIn={loggedIn}
+          username={username}
+          loginActive={loginActive}
+          registerActive={registerActive}
         />}
       </div>
     );
