@@ -1,0 +1,25 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:1.22
+    platform: linux/arm64/v8
+    volumes:
+      - "./conf.d:/etc/nginx/conf.d"
+    ports:
+      - "3000:80"
+  mongo:
+    container_name: mongo
+    image: mongo:3.6.22
+    ports:
+      - '27017:27017'
+  frontend:
+    build:
+      context: .
+    expose:
+      - "3000"
+  backend:
+    depends_on:
+      - mongo
+    image: registry.gitlab.com/conzorkingkong/clock-backend
+    expose:
+      - "3000"

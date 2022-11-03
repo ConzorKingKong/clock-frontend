@@ -23,15 +23,6 @@ export default class Register extends Component {
     this.eventListener = this.eventListener.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-  componentWillMount() {
-    document.body.addEventListener('click', this.eventListener);
-    document.body.addEventListener('touchend', this.eventListener);
-  }
-  componentWillUnmount() {
-    document.body.removeEventListener('click', this.eventListener);
-    document.body.removeEventListener('touchend', this.eventListener);
-    this.props.setRegisterState();
-  }
   onInputChange(e) {
     const {name, value} = e.target;
     const obj = {};
@@ -84,7 +75,8 @@ export default class Register extends Component {
         this.props.setAppState({
           loggedIn: data.loggedIn,
           username: data.username,
-          times: data.times
+          times: data.times,
+          showLoginModal: false
         });
         this.setState({
           email: '',

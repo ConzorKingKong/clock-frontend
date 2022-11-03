@@ -4,6 +4,7 @@ import loop from '!!file-loader!../../assets/loop';
 import Titlebar from '../titlebar';
 import Clock from '../clock';
 import AlarmModal from '../alarmModal';
+import LoginModal from '../loginModal'
 import cleanNums from '../../helpers/cleanNums';
 import ROOT_URL from '../../helpers/ROOT_URL';
 import './index.styl';
@@ -18,7 +19,10 @@ export default class App extends Component {
       date: new Date(),
       alarm: false,
       error: '',
-      alarmTime: {}
+      alarmTime: {},
+      showLoginModal: false,
+      loginActive: false,
+      registerActive: false
     };
     this.setAppState = this.setAppState.bind(this);
     this.notificationListener = this.notificationListener.bind(this);
@@ -105,7 +109,10 @@ export default class App extends Component {
       date,
       alarm,
       alarmTime,
-      error
+      error,
+      showLoginModal,
+      loginActive,
+      registerActive
     } = this.state;
     let displayHours = date.getHours();
     const displayMinutes = cleanNums(date.getMinutes());
@@ -140,6 +147,13 @@ export default class App extends Component {
           setAppState={this.setAppState}
           alarmTime={alarmTime}
         /> }
+        { showLoginModal && <LoginModal 
+        setAppState={this.setAppState}
+        loggedIn={loggedIn}
+        username={username}
+        loginActive={loginActive}
+        registerActive={registerActive}
+        />}
       </div>
     );
   }

@@ -17,16 +17,6 @@ export default class Login extends Component {
     this.eventListener = this.eventListener.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-  componentWillMount() {
-    document.body.addEventListener('click', this.eventListener);
-    document.body.addEventListener('touchend', this.eventListener);
-  }
-  componentWillUnmount() {
-    const {setLoginState} = this.props;
-    document.body.removeEventListener('click', this.eventListener);
-    document.body.removeEventListener('touchend', this.eventListener);
-    setLoginState();
-  }
   onInputChange(e) {
     const {name, value} = e.target;
     const obj = {};
@@ -63,7 +53,8 @@ export default class Login extends Component {
         setAppState({
           loggedIn,
           username,
-          times
+          times,
+          showLoginModal: false
         });
         this.setState({
           login: '',
@@ -84,7 +75,8 @@ export default class Login extends Component {
       });
   }
   eventListener(e) {
-    const {reference, setLoginState} = this.props;
+    const {setLoginState} = this.props;
+    const {reference} = this.props || null;
     if (e.target === reference || !this.loginForm.contains(e.target)) setLoginState();
   }
   render() {
@@ -132,5 +124,4 @@ export default class Login extends Component {
 Login.propTypes = {
   setLoginState: PropTypes.func.isRequired,
   setAppState: PropTypes.func.isRequired,
-  reference: PropTypes.object.isRequired
 };
