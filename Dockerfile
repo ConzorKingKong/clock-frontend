@@ -11,4 +11,5 @@ RUN npm run build
 RUN rm -rf node_modules webpack.config.js src
 RUN npm install --production
 RUN rm package-lock.json
+ENV API_URL=a
 CMD ["npm", "start"]
