@@ -76,3 +76,5 @@ jobs:
             push: true
             tags: ${{ steps.login-ecr.outputs.registry }}/clock/frontend:latest
             platforms: linux/amd64,linux/arm64/v8
+            build-args: |
+              API_URL: ${{ secrets.API_URL }}
