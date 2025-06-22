@@ -5,7 +5,7 @@ ADD package.json app.js server.js webpack.config.js /app/
 RUN yarn
 RUN mkdir /app/src
 ARG API_URL
-ENV API_URL=${API_URL}
+ENV API_URL=$API_URL
 ADD src /app/src/
 RUN npm run build
 RUN rm -rf node_modules webpack.config.js src
